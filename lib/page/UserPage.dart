@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'UserInfo.dart';
+import 'LoginPage.dart';
+import 'package:flutter_tuan/tool/Storage.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -9,6 +11,26 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _checkToken();
+  }
+
+  void _checkToken() async {
+    Storage.read('token').then((token) {
+      if (token != null) {
+        Storage.delete('token');
+      } else {
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+          return new LoginPage();
+        }));
+        Storage.write('token', '11111111');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
