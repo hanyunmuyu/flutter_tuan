@@ -29,6 +29,7 @@ class _ExplorePageState extends State<ExplorePage>
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      key: ObjectKey("ExplorePage"),
       appBar: new AppBar(
         leading: new Icon(Icons.queue_music),
         title: new Container(

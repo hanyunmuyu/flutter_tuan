@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'UserPage.dart';
-import 'HomePage.dart';
+import 'MessagePage.dart';
 import 'ExplorePage.dart';
+import 'SchoolPage.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -20,14 +21,15 @@ class MainPageWidget extends StatefulWidget {
 class MainPageState extends State<MainPageWidget>
     with SingleTickerProviderStateMixin {
   PageController pageController;
-  int page = 1;
+  int page = 2;
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new PageView(
         children: <Widget>[
-          new HomePage(),
+          new MessagePage(),
+          new SchoolPage(),
           new ExplorePage(),
           new UserPage(),
         ],
@@ -37,9 +39,11 @@ class MainPageState extends State<MainPageWidget>
       bottomNavigationBar: new BottomNavigationBar(
         items: [
           new BottomNavigationBarItem(
-              icon: new Icon(Icons.home), title: new Text('首页')),
+              icon: new Icon(Icons.sms), title: new Text('消息')),
           new BottomNavigationBarItem(
-              icon: new Icon(Icons.explore), title: new Text('动态')),
+              icon: new Icon(Icons.school), title: new Text('高校')),
+          new BottomNavigationBarItem(
+              icon: new Icon(Icons.explore), title: new Text('发现')),
           new BottomNavigationBarItem(
               icon: new Icon(Icons.person), title: new Text('我的'))
         ],

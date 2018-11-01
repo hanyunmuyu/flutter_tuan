@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class MessagePage extends StatefulWidget {
   @override
   State createState() {
-    return new _HomePageState();
+    return new _MessagePageState();
   }
 }
 
-class _HomePageState extends State<HomePage> {
+class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         title: new Center(
-          child: new Text('莘莘团'),
+          child: new Text('消息'),
         ),
       ),
     );
