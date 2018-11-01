@@ -20,7 +20,7 @@ class MainPageWidget extends StatefulWidget {
 class MainPageState extends State<MainPageWidget>
     with SingleTickerProviderStateMixin {
   PageController pageController;
-  int page = 0;
+  int page = 1;
 
   @override
   Widget build(BuildContext context) {

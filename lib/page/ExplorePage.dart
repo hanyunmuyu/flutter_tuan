@@ -30,6 +30,7 @@ class _ExplorePageState extends State<ExplorePage>
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        leading: new Icon(Icons.queue_music),
         title: new Container(
           child: new Center(
             child: new TabBar(
@@ -43,6 +44,9 @@ class _ExplorePageState extends State<ExplorePage>
             ),
           ),
         ),
+        actions: <Widget>[
+          new Icon(Icons.camera_alt),
+        ],
       ),
       body: new TabBarView(
         children: [
