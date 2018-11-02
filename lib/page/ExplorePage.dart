@@ -11,7 +11,7 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   TabController _tabController;
 
   final List<Tab> myTabs = <Tab>[
@@ -26,8 +26,21 @@ class _ExplorePageState extends State<ExplorePage>
     ),
   ];
 
+  Widget followPage;
+  Widget recommendPage;
+  Widget nearbyPage;
+
   @override
   Widget build(BuildContext context) {
+    if (followPage == null) {
+      followPage = new FollowPage();
+    }
+    if (recommendPage == null) {
+      recommendPage = new RecommendPage();
+    }
+    if (nearbyPage == null) {
+      nearbyPage = new NearbyPage();
+    }
     return new Scaffold(
       key: ObjectKey("ExplorePage"),
       appBar: new AppBar(
@@ -50,10 +63,11 @@ class _ExplorePageState extends State<ExplorePage>
         ],
       ),
       body: new TabBarView(
+        key: ObjectKey('ExplorePage'),
         children: [
-          new FollowPage(),
-          new RecommendPage(),
-          new NearbyPage(),
+          followPage,
+          recommendPage,
+          nearbyPage,
         ],
         controller: _tabController,
       ),

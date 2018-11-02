@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tuan/http/HttpClient.dart';
 
 class FollowPage extends StatefulWidget {
   @override
@@ -12,6 +13,11 @@ class _FollowPageState extends State<FollowPage>
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
