@@ -154,7 +154,24 @@ class _UserInfoState extends State<UserInfo> {
                 ],
               ),
               trailing: new Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
+              onTap: () {
+                showModalBottomSheet<Null>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return new Container(
+                      child: new Padding(
+                        padding: const EdgeInsets.all(32.0),
+                        child: new ListView.builder(
+                          itemBuilder: (context, index) {
+                            return new Text('河南省');
+                          },
+                          itemCount: 200,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
             ),
             new ListTile(
               title: new Row(
