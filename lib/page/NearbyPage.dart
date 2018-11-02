@@ -7,12 +7,24 @@ class NearbyPage extends StatefulWidget {
   }
 }
 
-class _NearbyPageState extends State<NearbyPage> {
+class _NearbyPageState extends State<NearbyPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('nearby');
+    print('initState');
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('dispose');
   }
 
   @override
