@@ -169,7 +169,29 @@ class _UserInfoState extends State<UserInfo> {
                 ],
               ),
               trailing: new Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => new AlertDialog(
+                        title: new Text(""),
+                        content: new Text('aaaaaaa'),
+                        actions: <Widget>[
+                          new FlatButton(
+                            child: new Text("取消"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          new FlatButton(
+                            child: new Text("确定"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          )
+                        ],
+                      ),
+                );
+              },
             ),
           ],
         ),
