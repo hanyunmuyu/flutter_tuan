@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 class UserInfo extends StatefulWidget {
   @override
@@ -76,7 +77,23 @@ class _UserInfoState extends State<UserInfo> {
                 ],
               ),
               trailing: new Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
+              onTap: () {
+                DatePicker.showDatePicker(
+                  context,
+                  showTitleActions: true,
+                  locale: 'zh',
+                  minYear: 1970,
+                  maxYear: new DateTime.now().year,
+                  initialYear: new DateTime.now().year,
+                  initialMonth: 6,
+                  initialDate: 21,
+                  dateFormat: 'yyyy-mm-dd',
+                  onChanged: (year, month, date) {},
+                  onConfirm: (year, month, date) {
+                    print(year);
+                  },
+                );
+              },
             ),
             new ListTile(
               title: new Row(
@@ -106,7 +123,23 @@ class _UserInfoState extends State<UserInfo> {
                 ],
               ),
               trailing: new Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
+              onTap: () {
+                DatePicker.showDatePicker(
+                  context,
+                  showTitleActions: true,
+                  locale: 'zh',
+                  minYear: 1970,
+                  maxYear: new DateTime.now().year,
+                  initialYear: new DateTime.now().year,
+                  initialMonth: 6,
+                  initialDate: 21,
+                  dateFormat: 'yyyy',
+                  onChanged: (year, month, date) {},
+                  onConfirm: (year, month, date) {
+                    print(year);
+                  },
+                );
+              },
             ),
             new ListTile(
               title: new Row(
