@@ -7,8 +7,6 @@ final ThemeDataReducer = combineReducers<ThemeData>(
 
 ThemeData _refresh(ThemeData themeData, action) {
   themeData = action.themeData;
-  print(themeData);
-
   return themeData;
 }
 
