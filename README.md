@@ -14,3 +14,6 @@ For help getting started with Flutter, view our online
 [网络请求](https://pub.dartlang.org/packages/dio#-readme-tab-)
 
 [redux](https://pub.dartlang.org/packages/flutter_redux#-installing-tab-)
+
+
+[Flutter：实现一个滑动头部折叠的动画效果](https://blog.csdn.net/yumi0629/article/details/81775805)
