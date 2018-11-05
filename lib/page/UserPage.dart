@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'UserInfo.dart';
 import 'LoginPage.dart';
+import 'LogoutPage.dart';
 import 'package:flutter_tuan/tool/Storage.dart';
 
 class UserPage extends StatefulWidget {
@@ -38,6 +39,16 @@ class _UserPageState extends State<UserPage> {
         title: new Center(
           child: new Text('我的'),
         ),
+        actions: <Widget>[
+          new IconButton(
+            onPressed: () {
+              Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+                return new LogoutPage();
+              }));
+            },
+            icon: new Icon(Icons.settings),
+          ),
+        ],
       ),
       body: new Container(
         margin: const EdgeInsets.all(6.0),
@@ -145,16 +156,34 @@ class _UserPageState extends State<UserPage> {
                 ),
               ],
             ),
-            new Expanded(
-              child: new ListView(
-                children: <Widget>[
-                  new ListTile(
-                    leading: new Icon(Icons.face),
-                    title: new Text('111'),
-                  ),
-                ],
+            new Container(
+              width: double.infinity,
+              height: 50.0,
+              child: new Center(
+                child: new ListView(
+                  children: <Widget>[
+                    new ListTile(
+                      leading: new Icon(Icons.favorite),
+                      title: new Text('我的收藏'),
+                    ),
+                  ],
+                ),
               ),
-            )
+            ),
+            new Container(
+              width: double.infinity,
+              height: 50.0,
+              child: new Center(
+                child: new ListView(
+                  children: <Widget>[
+                    new ListTile(
+                      leading: new Icon(Icons.group),
+                      title: new Text('我的社团'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
