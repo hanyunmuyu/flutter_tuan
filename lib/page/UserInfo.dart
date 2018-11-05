@@ -198,7 +198,12 @@ class UserInfo extends StatelessWidget {
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               child: new SliverAppBar(
                 pinned: true,
-                leading: new Icon(Icons.arrow_back),
+                leading: new IconButton(
+                  icon: new Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.of(context).pop({"name": "hanyun"});
+                  },
+                ),
                 backgroundColor: Colors.white,
                 expandedHeight: 300.0,
                 forceElevated: innerBoxIsScrolled,
@@ -207,7 +212,7 @@ class UserInfo extends StatelessWidget {
                     children: <Widget>[
                       new AppBar(
                         title: new Center(
-                          child: new Text('标题'),
+                          child: new Text('个人中心'),
                         ),
                       ),
                       new Expanded(

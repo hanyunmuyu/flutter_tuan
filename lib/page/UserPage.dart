@@ -71,9 +71,11 @@ class _UserPageState extends State<UserPage> {
                 overflow: TextOverflow.ellipsis,
               ),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return new UserInfo();
-                }));
+                })).then((v) {
+                  print(v);
+                });
               },
               trailing: new Icon(Icons.keyboard_arrow_right),
             ),
