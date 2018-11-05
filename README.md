@@ -17,3 +17,5 @@ For help getting started with Flutter, view our online
 
 
 [Flutter：实现一个滑动头部折叠的动画效果](https://blog.csdn.net/yumi0629/article/details/81775805)
+
+[flutter顶部折叠动画](https://blog.csdn.net/u011272795/article/details/82740389)
