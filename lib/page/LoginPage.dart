@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'RegisterPage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -29,6 +30,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
       );
     }
+    Navigator.pushReplacementNamed(context, '/home');
+
   }
 
   @override
@@ -95,7 +98,14 @@ class _LoginPageState extends State<LoginPage> {
                     new FlatButton(
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(builder: (_) {
+                            return new RegisterPage();
+                          }),
+                        );
+                      },
                       child: new Text(
                         '注册',
                       ),

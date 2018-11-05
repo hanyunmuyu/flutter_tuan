@@ -26,6 +26,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: store.state.themeData,
+        routes: {
+          '/home': (BuildContext context) {
+            return new MainPage();
+          }
+        },
         home: new MainPage(),
       ),
     );
