@@ -6,11 +6,11 @@ import 'dart:convert';
 import 'package:flutter_tuan/tool/Storage.dart';
 
 class UserService extends BaseService {
+  static String userKey = "userModel";
+
   static login(BuildContext context, Map<String, dynamic> map) async {
     String res = await HttpClient.post('/api/v1/login', map);
-    print(res);
-
-    Storage.write('userModel', res);
+    Storage.write(userKey, res);
     Map user = json.decode(res);
     UserModel userModel = UserModel.fromJson(user);
     Navigator.of(context).pushNamed('/home');
@@ -18,7 +18,12 @@ class UserService extends BaseService {
   }
 
   static checkUserIsLogin(BuildContext context) async {
-    var userJson = await Storage.read('userModel');
+    var userJson = await Storage.read(userKey);
     return userJson != null;
+  }
+
+  static logout(BuildContext context) async {
+    Storage.delete(userKey);
+    Navigator.of(context).pushReplacementNamed('/home');
   }
 }

@@ -21,8 +21,15 @@ class HttpClient {
     );
     Dio dio = new Dio(options);
     Response response;
-
-    response = await dio.post(path, data: mapData);
-    return response.data.toString();
+    try {
+      response = await dio.post(path, data: mapData);
+      return response.data.toString();
+    } on DioError catch (e) {
+      if (e.response == null) {
+        if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+          return '''{"code": 500}''';
+        }
+      }
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tuan/service/UserService.dart';
 
 class LogoutPage extends StatelessWidget {
   @override
@@ -14,7 +15,9 @@ class LogoutPage extends StatelessWidget {
           child: RaisedButton(
             color: Theme.of(context).primaryColor,
             textColor: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+              UserService.logout(context);
+            },
             child: new Text('退出'),
           ),
         ),
