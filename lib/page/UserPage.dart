@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'UserInfo.dart';
-import 'LoginPage.dart';
 import 'LogoutPage.dart';
-import 'package:flutter_tuan/tool/Storage.dart';
+import 'package:flutter_tuan/service/UserService.dart';
+import 'LoginPage.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -16,20 +16,16 @@ class _UserPageState extends State<UserPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _checkToken();
+    _checkUser();
   }
 
-  void _checkToken() async {
-    Storage.read('token').then((token) {
-      if (token != null) {
-        Storage.delete('token');
-      } else {
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-          return new LoginPage();
-        }));
-        Storage.write('token', '11111111');
-      }
-    });
+  void _checkUser() async {
+    var res = await UserService.checkUserIsLogin(context);
+    if (!res) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+        return new LoginPage();
+      }));
+    }
   }
 
   @override

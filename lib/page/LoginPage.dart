@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'RegisterPage.dart';
+import 'package:flutter_tuan/service/UserService.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,27 +12,37 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _phoneController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
+  String _errorPhoneMsg;
+  String _errorPasswordMsg;
+
+  bool _isChinaPhoneLegal(String str) {
+    return new RegExp(
+            '^((13[0-9])|(15[^4])|(166)|(17[0-8])|(18[0-9])|(19[8-9])|(147,145))\\d{8}\$')
+        .hasMatch(str);
+  }
 
   void _login() async {
-    if (_phoneController.text.length < 1) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: new Text('手机号不可以为空'),
-            ),
-      );
+    if (_phoneController.text.length < 1 ||
+        !_isChinaPhoneLegal(_phoneController.text)) {
+      setState(() {
+        _errorPhoneMsg = '手机号不可以为空';
+      });
       return;
     }
-    if (_passwordController.text.length < 1) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: new Text('密码不可以为空'),
-            ),
-      );
+    if (_passwordController.text.length < 6) {
+      setState(() {
+        _errorPasswordMsg = '密码不可以小于六位';
+      });
+      return;
     }
-    Navigator.pushReplacementNamed(context, '/home');
-
+    setState(() {
+      _errorPasswordMsg = null;
+      _errorPhoneMsg = null;
+    });
+    UserService.login(context, {
+      "mobile": _phoneController.text.trim(),
+      "password": _passwordController.text.trim()
+    });
   }
 
   @override
@@ -59,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                     icon: new Icon(
                       Icons.phone,
                     ),
+                    errorText: _errorPhoneMsg,
                   ),
                   keyboardType: TextInputType.phone,
                   controller: _phoneController,
@@ -72,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                     icon: new Icon(
                       Icons.lock,
                     ),
+                    errorText: _errorPasswordMsg,
                   ),
                   obscureText: true,
                   controller: _passwordController,
