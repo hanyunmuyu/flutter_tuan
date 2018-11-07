@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'CommunityPage.dart';
+import 'SchoolyardPage.dart';
 
 class SchoolPage extends StatefulWidget {
   @override
@@ -7,16 +9,64 @@ class SchoolPage extends StatefulWidget {
   }
 }
 
-class _SchoolPageState extends State<SchoolPage> {
+class _SchoolPageState extends State<SchoolPage> with TickerProviderStateMixin {
+  TabController _tabController;
+
+  final List<Tab> myTabs = <Tab>[
+    new Tab(
+      text: '校园',
+    ),
+    new Tab(
+      text: '动态',
+    ),
+    new Tab(
+      text: '社团',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      key: ObjectKey("ExplorePage"),
       appBar: new AppBar(
-        title: new Center(
-          child: new Text('高校'),
+        title: new Container(
+          child: new Center(
+            child: new TabBar(
+              controller: _tabController,
+              tabs: myTabs,
+              isScrollable: true,
+              indicatorSize: TabBarIndicatorSize.tab,
+              labelColor: Colors.white,
+              labelStyle: new TextStyle(fontSize: 16.0),
+              unselectedLabelStyle: new TextStyle(fontSize: 12.0),
+            ),
+          ),
         ),
+        actions: <Widget>[
+        ],
       ),
-      body: new Text('SchoolPage'),
+      body: new TabBarView(
+        key: ObjectKey('ExplorePage'),
+        children: [
+          new SchoolyardPage(),
+          new CommunityPage(),
+          new CommunityPage(),
+        ],
+        controller: _tabController,
+      ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController =
+        new TabController(length: myTabs.length, initialIndex: 1, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 }

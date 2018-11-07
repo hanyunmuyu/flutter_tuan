@@ -4,24 +4,17 @@ import 'MessagePage.dart';
 import 'ExplorePage.dart';
 import 'SchoolPage.dart';
 
-class MainPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new MainPageWidget();
-  }
-}
-
-class MainPageWidget extends StatefulWidget {
+class MainPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new MainPageState();
+    return new _MainPageState();
   }
 }
 
-class MainPageState extends State<MainPageWidget>
+class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
   PageController pageController;
-  int page = 2;
+  int page = 1;
 
   @override
   Widget build(BuildContext context) {
