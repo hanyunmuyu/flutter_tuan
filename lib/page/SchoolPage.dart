@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'CommunityPage.dart';
 import 'SchoolyardPage.dart';
-
+import 'SchoolActivePage.dart';
 class SchoolPage extends StatefulWidget {
   @override
   State createState() {
@@ -49,7 +49,7 @@ class _SchoolPageState extends State<SchoolPage> with TickerProviderStateMixin {
         key: ObjectKey('ExplorePage'),
         children: [
           new SchoolyardPage(),
-          new CommunityPage(),
+          new SchoolActivePage(),
           new CommunityPage(),
         ],
         controller: _tabController,
