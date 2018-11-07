@@ -17,13 +17,20 @@ class UserService extends BaseService {
     return userModel;
   }
 
-  static checkUserIsLogin(BuildContext context) async {
-    var userJson = await Storage.read(userKey);
-    return userJson != null;
-  }
-
   static logout(BuildContext context) async {
     Storage.delete(userKey);
     Navigator.of(context).pushReplacementNamed('/home');
+  }
+
+  static getUser(BuildContext context) async {
+    var userJson = await Storage.read(userKey);
+    if (userJson == null) {
+      Navigator.of(context).pushNamed('/login');
+      return null;
+    }
+    Map user = json.decode(userJson);
+    UserModel userModel = UserModel.fromJson(user);
+    print(userModel.data.keys);
+    return userModel;
   }
 }
