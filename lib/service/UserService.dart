@@ -14,34 +14,31 @@ class UserService extends BaseService {
     Map user = json.decode(res);
     UserModel userModel = UserModel.fromJson(user);
     Navigator.of(context)
-      ..pop()
-      ..pop()
+      ..pop(true)
       ..pushReplacementNamed('/home');
     return userModel;
   }
 
-  static checkUserIsLogin(BuildContext context) async {
-    var userJson = await Storage.read(userKey);
-    return userJson != null;
+  static void goHome(BuildContext context) async {
+    Navigator.of(context)
+      ..pop(true)
+      ..pushReplacementNamed('/home');
   }
 
   static getUserInfo(BuildContext context) async {
     var userJson = await Storage.read(userKey);
     if (userJson == null) {
-      Navigator.of(context)
-        ..pop()
-        ..pop()
-        ..pushReplacementNamed('/home');
-      return;
+      Navigator.of(context)..pushNamed('/login');
+      return null;
     }
 
+    return UserModel.fromJson(json.decode(userJson));
   }
 
   static logout(BuildContext context) async {
     Storage.delete(userKey);
     Navigator.of(context)
-      ..pop()
-      ..pop()
+      ..pop(true)
       ..pushReplacementNamed('/home');
   }
 }

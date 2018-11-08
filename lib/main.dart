@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_tuan/common/redux/AppState.dart';
 import 'package:flutter_tuan/common/redux/ThemeRedux.dart';
 import 'package:flutter_tuan/common/redux/UserRedux.dart';
+import 'package:flutter_tuan/page/LoginPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,7 +30,10 @@ class MyApp extends StatelessWidget {
         routes: {
           '/home': (BuildContext context) {
             return new MainPage();
-          }
+          },
+          '/login': (BuildContext context) {
+            return new LoginPage();
+          },
         },
         home: new MainPage(),
       ),

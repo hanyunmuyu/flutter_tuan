@@ -3,6 +3,7 @@ import 'UserInfo.dart';
 import 'LogoutPage.dart';
 import 'package:flutter_tuan/service/UserService.dart';
 import 'LoginPage.dart';
+import 'package:flutter_tuan/model/UserModel.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -12,20 +13,22 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  UserModel userModel;
+
+  void _getUser() async {
+    var user = await UserService.getUserInfo(context);
+    if (user != null) {
+      setState(() {
+        userModel = user;
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _checkUser();
-  }
-
-  void _checkUser() async {
-    var res = await UserService.checkUserIsLogin(context);
-    if (!res) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return new LoginPage();
-      }));
-    }
+    _getUser();
   }
 
   @override

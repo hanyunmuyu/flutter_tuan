@@ -4,12 +4,16 @@
   "msg": "成功！",
   "data": {
     "id": 1,
-    "name": "",
+    "name": "hanyun",
+    "true_name": "",
     "email": "",
     "mobile": "15701308875",
-    "api_token": "e1bccd465c9e7a0372776a8631f671de",
+    "api_token": "49a1967beb5df652a6e33518e8a6f689",
     "email_verified_at": "",
-    "created_at": "2018-11-06 04:06:06",
-    "updated_at": "2018-11-06 04:22:03"
+    "avatar": "",
+    "school_id": "",
+    "gender": 1,
+    "created_at": "2018-11-07 06:13:28",
+    "updated_at": "2018-11-07 06:16:23"
   }
 }
