@@ -70,3 +70,6 @@ Map get glossaryData => _$glossaryDataJsonLiteral;
 
 
 flutter packages pub run build_runner build 生成模板
+
+
+[redux 修改主题](https://www.codercto.com/a/28285.html)

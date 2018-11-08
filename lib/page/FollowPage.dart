@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tuan/http/HttpClient.dart';
 
 class FollowPage extends StatefulWidget {
   @override

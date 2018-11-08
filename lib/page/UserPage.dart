@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'UserInfo.dart';
 import 'LogoutPage.dart';
 import 'package:flutter_tuan/service/UserService.dart';
-import 'LoginPage.dart';
 import 'package:flutter_tuan/model/UserModel.dart';
 
 class UserPage extends StatefulWidget {

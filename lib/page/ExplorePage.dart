@@ -11,7 +11,7 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
 
   final List<Tab> myTabs = <Tab>[

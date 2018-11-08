@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'RegisterPage.dart';
 import 'package:flutter_tuan/service/UserService.dart';
-import 'package:flutter_tuan/service/UserService.dart';
 
 class LoginPage extends StatefulWidget {
   @override
