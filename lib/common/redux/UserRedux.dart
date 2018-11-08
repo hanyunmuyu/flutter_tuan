@@ -1,17 +1,17 @@
-import 'package:flutter_tuan/common/model/User.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_tuan/model/UserModel.dart';
 
-final UserReducer = combineReducers<User>([
-  TypedReducer<User, UpdateUserAction>(_updateLoaded),
+final UserReducer = combineReducers<UserModel>([
+  TypedReducer<UserModel, UpdateUserAction>(_updateLoaded),
 ]);
 
-User _updateLoaded(User user, action) {
+UserModel _updateLoaded(UserModel user, action) {
   user = action.user;
   return user;
 }
 
 class UpdateUserAction {
-  final User user;
+  final UserModel user;
 
   UpdateUserAction(this.user);
 }
