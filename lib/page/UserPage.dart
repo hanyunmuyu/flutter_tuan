@@ -16,7 +16,7 @@ class _UserPageState extends State<UserPage> {
   UserModel userModel;
 
   void _getUser() async {
-    var user = await UserService.getUser(context);
+    var user = await UserService.getUserInfo(context);
     if (user != null) {
       setState(() {
         userModel = user;
