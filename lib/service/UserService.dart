@@ -19,11 +19,16 @@ class UserService extends BaseService {
     return userModel;
   }
 
+  static void goHome(BuildContext context) async {
+    Navigator.of(context)
+      ..pop(true)
+      ..pushReplacementNamed('/home');
+  }
+
   static getUserInfo(BuildContext context) async {
     var userJson = await Storage.read(userKey);
     if (userJson == null) {
-      Navigator.of(context)
-        ..pushNamed('/login');
+      Navigator.of(context)..pushNamed('/login');
       return null;
     }
 
