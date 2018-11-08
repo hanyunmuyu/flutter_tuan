@@ -91,7 +91,7 @@ class _UserPageState extends State<UserPage> {
             ),
             new Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 new Expanded(
                   child: new ListTile(
