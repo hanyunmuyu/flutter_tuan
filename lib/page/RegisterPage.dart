@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tuan/service/UserService.dart';
+import 'dart:convert';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -15,7 +17,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _register() async {
     if (_phoneController.text.length < 1) {
-      print('111');
       setState(() {
         _errorPhoneMsg = '手机号不可以为空';
       });
@@ -29,11 +30,26 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
+    UserService.register(_phoneController.text, _passwordController.text)
+      ..then((v) {
+        Map map = json.decode(v);
+        if (map['code'] == 200) {
+          Navigator.of(context)
+            ..pop(true)
+            ..pop(true)
+            ..pushReplacementNamed('/home');
+        } else {
+          print(map);
+          setState(() {
+            _errorPhoneMsg = map['msg'];
+          });
+        }
+      });
+
     setState(() {
       _errorPhoneMsg = null;
       _errorPasswordMsg = null;
     });
-    Navigator.pushNamed(context, '/home');
   }
 
   @override

@@ -48,4 +48,10 @@ class UserService extends BaseService {
       ..pop(true)
       ..pushReplacementNamed('/home');
   }
+
+  static Future register(String mobile, String password) async {
+    String res = await HttpClient.post(
+        '/api/v1/register', {"mobile": mobile, "password": password});
+    return res;
+  }
 }
