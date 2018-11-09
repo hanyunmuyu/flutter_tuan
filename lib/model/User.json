@@ -8,12 +8,13 @@
     "true_name": "",
     "email": "",
     "mobile": "15701308875",
-    "api_token": "49a1967beb5df652a6e33518e8a6f689",
+    "api_token": "7a6d927f9ceed4de35953d8c685db84a",
     "email_verified_at": "",
-    "avatar": "",
+    "avatar": "http://192.168.1.66:88/img/dog.jpg",
     "school_id": "",
     "gender": 1,
-    "created_at": "2018-11-07 06:13:28",
-    "updated_at": "2018-11-07 06:16:23"
+    "motto": "故天将降大任于斯人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为，所以动心忍性，曾益其所不能",
+    "created_at": "2018-11-09 06:28:39",
+    "updated_at": "2018-11-09 06:30:48"
   }
 }
