@@ -17,13 +17,18 @@ class LogoutPage extends StatelessWidget {
       body: new Container(
         child: new Column(
           children: <Widget>[
-            new FlatButton(
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                UserService.logout(context);
+            new StoreConnector<AppState, Store>(
+              builder: (context, store) {
+                return new FlatButton(
+                  color: Theme.of(context).primaryColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    UserService.logout(context, store);
+                  },
+                  child: new Text('退出'),
+                );
               },
-              child: new Text('退出'),
+              converter: (store) => store,
             ),
             new StoreConnector<AppState, Store>(
               builder: (context, store) {

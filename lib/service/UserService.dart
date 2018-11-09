@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tuan/model/UserModel.dart';
 import 'dart:convert';
 import 'package:flutter_tuan/tool/Storage.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_tuan/common/redux/UserRedux.dart';
 
 class UserService extends BaseService {
   static String userKey = "userModel";
@@ -19,23 +21,30 @@ class UserService extends BaseService {
     return userModel;
   }
 
+  static Future doLogin(Map<String, dynamic> map, Store store) async {
+    String res = await HttpClient.post('/api/v1/login', map);
+
+    Storage.write(userKey, res);
+    Map user = json.decode(res);
+    UserModel userModel = UserModel.fromJson(user);
+    store.dispatch(UpdateUserAction(userModel));
+  }
+
   static void goHome(BuildContext context) async {
     Navigator.of(context)
       ..pop(true)
       ..pushReplacementNamed('/home');
   }
 
-  static getUserInfo(BuildContext context) async {
+  static Future getUserInfo() async {
     var userJson = await Storage.read(userKey);
-    if (userJson == null) {
-      Navigator.of(context)..pushNamed('/login');
-      return null;
-    }
-
-    return UserModel.fromJson(json.decode(userJson));
+    return userJson;
   }
 
-  static logout(BuildContext context) async {
+  static logout(BuildContext context, Store store) async {
+    store.dispatch(
+        UpdateUserAction(new UserModel(200, 'success', 'success', null)));
+
     Storage.delete(userKey);
     Navigator.of(context)
       ..pop(true)

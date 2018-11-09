@@ -17,58 +17,20 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  UserModel userModel;
-
-  void _getUser() async {
-    var user = await UserService.getUserInfo(context);
-    if (user != null) {
-      setState(() {
-        userModel = user;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getUser();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    init();
-  }
-
-  void init() async {
-    Store<AppState> store = StoreProvider.of<AppState>(context);
-
-    String jsonStr = '''
-    {
-  "code": 200,
-  "status": "success",
-  "msg": "成功！",
-  "data": {
-    "id": 1,
-    "name": "hanyun",
-    "true_name": "",
-    "email": "",
-    "mobile": "15701308875",
-    "api_token": "49a1967beb5df652a6e33518e8a6f689",
-    "email_verified_at": "",
-    "avatar": "",
-    "school_id": "",
-    "gender": 1,
-    "created_at": "2018-11-07 06:13:28",
-    "updated_at": "2018-11-07 06:16:23"
-  }
-}
-    ''';
-
-    store.dispatch(UpdateUserAction(UserModel.fromJson(json.decode(jsonStr))));
-  }
+//  void _getUser() async {
+//    UserService.getUserInfo().then((v) {
+//      if (v == null) {
+//        Navigator.pushNamed(context, '/login');
+//      }
+//    });
+//  }
+//
+//  @override
+//  void initState() {
+//    // TODO: implement initState
+//    super.initState();
+//    _getUser();
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +52,16 @@ class _UserPageState extends State<UserPage> {
       ),
       body: new StoreConnector<AppState, Store>(
         builder: (context, store) {
-          print(store.state.user.data);
+          if (store.state.user.data == null) {
+            return new Center(
+              child: new FlatButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+                child: new Text('去登录'),
+              ),
+            );
+          }
           return new Container(
             margin: const EdgeInsets.all(6.0),
             child: new Column(
@@ -111,7 +82,7 @@ class _UserPageState extends State<UserPage> {
                       new Align(
                         alignment: Alignment.centerLeft,
                         child: new Text(
-                          '寒云',
+                          store.state.user.data['name'],
                           textScaleFactor: 1.2,
                         ),
                       )

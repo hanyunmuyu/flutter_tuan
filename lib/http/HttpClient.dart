@@ -12,7 +12,7 @@ class HttpClient {
     return response.data.toString();
   }
 
-  static post(String path, Map<String, dynamic> mapData) async {
+  static Future post(String path, Map<String, dynamic> mapData) async {
     Options options = new Options(
       baseUrl: "http://192.168.1.66:88",
       connectTimeout: 5000,
