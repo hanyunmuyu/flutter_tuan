@@ -4,7 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_tuan/common/redux/AppState.dart';
 import 'package:flutter_tuan/page/LoginPage.dart';
-
+import 'package:flutter_tuan/page/SplashPage.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -51,7 +51,7 @@ class _App extends State<App> {
               return new LoginPage();
             },
           },
-          home: new MainPage(),
+          home: new SplashPage(),
         );
       },
       converter: (store) => store.state.themeData,
