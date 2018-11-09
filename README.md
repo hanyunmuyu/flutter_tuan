@@ -71,5 +71,7 @@ Map get glossaryData => _$glossaryDataJsonLiteral;
 
 flutter packages pub run build_runner build 生成模板
 
+[flutter的redux](https://www.jianshu.com/p/34a6224e0cf1)
 
 [redux 修改主题](https://www.codercto.com/a/28285.html)
+
