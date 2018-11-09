@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       themeData: new ThemeData(
         primarySwatch: Colors.purple,
       ),
+      user: null,
     ),
   );
 

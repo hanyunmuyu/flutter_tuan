@@ -42,9 +42,7 @@ class UserService extends BaseService {
   }
 
   static logout(BuildContext context, Store store) async {
-    store.dispatch(
-        UpdateUserAction(new UserModel(200, 'success', 'success', null)));
-
+    store.dispatch(UpdateUserAction(null));
     Storage.delete(userKey);
     Navigator.of(context)
       ..pop(true)

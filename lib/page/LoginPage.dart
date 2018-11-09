@@ -48,12 +48,10 @@ class _LoginPageState extends State<LoginPage> {
       "password": _passwordController.text.trim()
     }, store)
         .then((v) {
-      Navigator.pushNamed(context, '/home');
+      Navigator.of(context)
+        ..pop(true)
+        ..pushReplacementNamed('/home');
     });
-//    UserService.login(context, {
-//      "mobile": _phoneController.text.trim(),
-//      "password": _passwordController.text.trim()
-//    });
   }
 
   @override

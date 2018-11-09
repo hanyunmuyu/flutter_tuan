@@ -52,11 +52,11 @@ class _UserPageState extends State<UserPage> {
       ),
       body: new StoreConnector<AppState, Store>(
         builder: (context, store) {
-          if (store.state.user.data == null) {
+          if (store.state.user == null) {
             return new Center(
               child: new FlatButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.of(context)..pushNamed('/login');
                 },
                 child: new Text('去登录'),
               ),
