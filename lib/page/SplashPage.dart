@@ -30,6 +30,12 @@ class _SplashState extends State<SplashPage> {
         UserService.updateUserInfo(store, userJson);
       }
     });
+    UserService.getThemeInfo().then((themeModelJson) {
+      print(themeModelJson);
+      if (themeModelJson != null) {
+        UserService.initTheme(store, themeModelJson);
+      }
+    });
   }
 
   void _go() {

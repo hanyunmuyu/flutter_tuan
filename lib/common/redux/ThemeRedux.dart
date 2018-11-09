@@ -1,17 +1,18 @@
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tuan/model/ThemeModel.dart';
 
-final ThemeDataReducer = combineReducers<ThemeData>(
-  [TypedReducer<ThemeData, RefreshThemeAction>(_refresh)],
+final ThemeDataReducer = combineReducers<ThemeModel>(
+  [TypedReducer<ThemeModel, RefreshThemeAction>(_refresh)],
 );
 
-ThemeData _refresh(ThemeData themeData, action) {
-  themeData = action.themeData;
-  return themeData;
+ThemeModel _refresh(ThemeModel themeModel, action) {
+  themeModel = action.themeModel;
+  return themeModel;
 }
 
 class RefreshThemeAction {
-  final ThemeData themeData;
+  final ThemeModel themeModel;
 
-  RefreshThemeAction(this.themeData);
+  RefreshThemeAction(this.themeModel);
 }

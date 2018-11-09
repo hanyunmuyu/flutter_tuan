@@ -6,9 +6,12 @@ import 'dart:convert';
 import 'package:flutter_tuan/tool/Storage.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_tuan/common/redux/UserRedux.dart';
+import 'package:flutter_tuan/model/ThemeModel.dart';
+import 'package:flutter_tuan/common/redux/ThemeRedux.dart';
 
 class UserService extends BaseService {
   static String userKey = "userModel";
+  static String themeKey = "themeData";
 
   static login(BuildContext context, Map<String, dynamic> map) async {
     String res = await HttpClient.post('/api/v1/login', map);
@@ -57,5 +60,20 @@ class UserService extends BaseService {
     String res = await HttpClient.post(
         '/api/v1/register', {"mobile": mobile, "password": password});
     return res;
+  }
+
+  static changeUserTheme(Store store, String themeData) async {
+    ThemeModel themeModel = new ThemeModel(themeData.trim().toLowerCase());
+    Storage.write(themeKey, json.encode(themeModel));
+    store.dispatch(RefreshThemeAction(themeModel));
+  }
+
+  static initTheme(Store store, String themeModelJson) async {
+    Map map = json.decode(themeModelJson);
+    store.dispatch(RefreshThemeAction(new ThemeModel(map['themeData'])));
+  }
+
+  static Future getThemeInfo() async {
+    return Storage.read(themeKey);
   }
 }

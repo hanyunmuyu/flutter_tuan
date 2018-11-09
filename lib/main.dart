@@ -5,15 +5,15 @@ import 'package:redux/redux.dart';
 import 'package:flutter_tuan/common/redux/AppState.dart';
 import 'package:flutter_tuan/page/LoginPage.dart';
 import 'package:flutter_tuan/page/SplashPage.dart';
+import 'package:flutter_tuan/model/ThemeModel.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   final store = new Store<AppState>(
     appReducer,
     initialState: new AppState(
-      themeData: new ThemeData(
-        primarySwatch: Colors.purple,
-      ),
+      themeModel: new ThemeModel('purple'),
       user: null,
     ),
   );
@@ -38,11 +38,11 @@ class App extends StatefulWidget {
 class _App extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, ThemeData>(
-      builder: (context, theme) {
+    return new StoreConnector<AppState, Store>(
+      builder: (context, store) {
         return MaterialApp(
           title: 'Flutter Demo',
-          theme: theme,
+          theme: ThemeModel.map[store.state.themeModel.themeData],
           routes: {
             '/home': (BuildContext context) {
               return new MainPage();
@@ -54,7 +54,7 @@ class _App extends State<App> {
           home: new SplashPage(),
         );
       },
-      converter: (store) => store.state.themeData,
+      converter: (store) => store,
     );
   }
 }

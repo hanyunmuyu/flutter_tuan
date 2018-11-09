@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_tuan/common/redux/AppState.dart';
 import 'package:flutter_tuan/common/redux/ThemeRedux.dart';
+import 'package:flutter_tuan/model/ThemeModel.dart';
 
 class LogoutPage extends StatelessWidget {
   @override
@@ -37,12 +38,9 @@ class LogoutPage extends StatelessWidget {
                   textColor: Colors.white,
                   child: new Text('purple'),
                   onPressed: () {
-                    store.dispatch(
-                      RefreshThemeAction(
-                        new ThemeData(
-                          primarySwatch: Colors.purple,
-                        ),
-                      ),
+                    UserService.changeUserTheme(
+                      store,
+                      'purple',
                     );
                   },
                 );
@@ -56,11 +54,7 @@ class LogoutPage extends StatelessWidget {
                   color: Colors.blue,
                   child: new Text('blue'),
                   onPressed: () {
-                    store.dispatch(
-                      RefreshThemeAction(
-                        ThemeData.light(),
-                      ),
-                    );
+                    UserService.changeUserTheme(store, 'blue');
                   },
                 );
               },
@@ -73,11 +67,7 @@ class LogoutPage extends StatelessWidget {
                   color: Colors.black,
                   child: new Text('dark'),
                   onPressed: () {
-                    store.dispatch(
-                      RefreshThemeAction(
-                        ThemeData.dark(),
-                      ),
-                    );
+                    UserService.changeUserTheme(store, 'dark');
                   },
                 );
               },

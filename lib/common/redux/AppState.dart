@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
 import 'UserRedux.dart';
 import 'ThemeRedux.dart';
 import 'package:flutter_tuan/model/UserModel.dart';
+import 'package:flutter_tuan/model/ThemeModel.dart';
 
 class AppState {
   UserModel user;
-  ThemeData themeData;
+  ThemeModel themeModel;
 
-  AppState({this.user, this.themeData});
+  AppState({this.user, this.themeModel});
 }
 
 AppState appReducer(AppState state, action) {
   return AppState(
-    themeData: ThemeDataReducer(state.themeData, action),
+    themeModel: ThemeDataReducer(state.themeModel, action),
     user: UserReducer(state.user, action),
   );
 }
