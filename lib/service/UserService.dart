@@ -50,7 +50,7 @@ class UserService extends BaseService {
 
   static logout(BuildContext context, Store store) async {
     store.dispatch(UpdateUserAction(null));
-    Storage.delete(userKey);
+    Storage.clear();
     Navigator.of(context)
       ..pop(true)
       ..pushReplacementNamed('/home');
