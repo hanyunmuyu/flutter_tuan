@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'CommunityPage.dart';
 import 'SchoolyardPage.dart';
 import 'SchoolActivePage.dart';
+
 class SchoolPage extends StatefulWidget {
   @override
   State createState() {
@@ -9,7 +10,8 @@ class SchoolPage extends StatefulWidget {
   }
 }
 
-class _SchoolPageState extends State<SchoolPage> with TickerProviderStateMixin {
+class _SchoolPageState extends State<SchoolPage>
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
 
   final List<Tab> myTabs = <Tab>[
@@ -27,7 +29,7 @@ class _SchoolPageState extends State<SchoolPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      key: ObjectKey("ExplorePage"),
+      key: ObjectKey("SchoolPage"),
       appBar: new AppBar(
         title: new Container(
           child: new Center(
@@ -42,11 +44,10 @@ class _SchoolPageState extends State<SchoolPage> with TickerProviderStateMixin {
             ),
           ),
         ),
-        actions: <Widget>[
-        ],
+        actions: <Widget>[],
       ),
       body: new TabBarView(
-        key: ObjectKey('ExplorePage'),
+        key: ObjectKey('SchoolPage'),
         children: [
           new SchoolyardPage(),
           new SchoolActivePage(),

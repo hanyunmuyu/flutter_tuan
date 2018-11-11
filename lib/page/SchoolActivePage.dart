@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 
-class SchoolActivePage extends StatelessWidget {
+class SchoolActivePage extends StatefulWidget {
+  @override
+  State createState() {
+    return new _SchoolActivePageState();
+  }
+}
+
+class _SchoolActivePageState extends State<SchoolActivePage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
   List<Widget> children = <Widget>[
     new Center(
       child: new Text('榜单推荐'),
