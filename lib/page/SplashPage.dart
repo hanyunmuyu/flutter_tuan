@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_tuan/page/MainPage.dart';
 import 'package:flutter_tuan/service/UserService.dart';
 import 'package:flutter_tuan/common/redux/AppState.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _SplashState extends State<SplashPage> {
   Timer t;
 
   String img =
-      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541759462297&di=c1c0656609237ad7c17d65e59eadfbed&imgtype=jpg&src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D1210175310%2C2567076149%26fm%3D214%26gp%3D0.jpg';
+      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000298372&di=fc3d1772b1cd7ecf9712c088895c9f50&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3Df5f84b07e1c4b7452099bf55a7957462%2F42a98226cffc1e17752f411f4090f603738de909.jpg';
 
   @override
   void didChangeDependencies() {
@@ -31,7 +32,6 @@ class _SplashState extends State<SplashPage> {
       }
     });
     UserService.getThemeInfo().then((themeModelJson) {
-      print(themeModelJson);
       if (themeModelJson != null) {
         UserService.initTheme(store, themeModelJson);
       }
@@ -85,8 +85,8 @@ class _SplashState extends State<SplashPage> {
                 ),
               ),
               new Center(
-                child: new Image.network(
-                  img,
+                child: new Image(
+                  image: new CachedNetworkImageProvider(img),
                   fit: BoxFit.fill,
                 ),
               ),

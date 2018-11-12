@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SchoolyardPage extends StatefulWidget {
   @override
@@ -199,7 +199,9 @@ class _SchoolDetailState extends State<SchoolDetail> {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                  image: NetworkImage(widget.data['img']), fit: BoxFit.fill),
+                image: new CachedNetworkImageProvider(widget.data['img']),
+                fit: BoxFit.fill,
+              ),
             ),
             alignment: Alignment.bottomCenter,
             margin: const EdgeInsets.all(1.0),
