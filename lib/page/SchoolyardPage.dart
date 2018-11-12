@@ -147,7 +147,7 @@ class _SchoolyardPageState extends State<SchoolyardPage>
         onPressed: () {
           _scrollController.animateTo(
             .0,
-            duration: const Duration(milliseconds: 800),
+            duration: const Duration(milliseconds: 600),
             curve: Curves.ease,
           );
         },
