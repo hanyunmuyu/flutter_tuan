@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_tuan/service/SchoolService.dart';
+import 'dart:convert';
 
 class SchoolyardPage extends StatefulWidget {
   @override
@@ -13,71 +15,12 @@ class _SchoolyardPageState extends State<SchoolyardPage>
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
-  List<String> imgList = [
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000298372&di=fc3d1772b1cd7ecf9712c088895c9f50&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3Df5f84b07e1c4b7452099bf55a7957462%2F42a98226cffc1e17752f411f4090f603738de909.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
-    'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
-  ];
+
   ScrollController _scrollController = new ScrollController();
   List<Map<String, dynamic>> schoolList = new List();
   bool isLoading = false;
+  int currentPage = 1;
+  int totalPage = 1;
 
   @override
   void initState() {
@@ -99,6 +42,7 @@ class _SchoolyardPageState extends State<SchoolyardPage>
 
   void _initData() async {
     isLoading = true;
+    currentPage = 1;
     schoolList.clear();
     _loadData();
     isLoading = false;
@@ -106,15 +50,18 @@ class _SchoolyardPageState extends State<SchoolyardPage>
 
   void _loadData() async {
     isLoading = true;
-    for (int i = 0; i < 18; i++) {
-      Map<String, dynamic> map = {
-        "title": "河南工业大学",
-        "img": imgList[i],
-        "id": schoolList.length,
-        "favoriteNumber": i * 10,
-        "memberNumber": i * 20
-      };
-      schoolList.add(map);
+    if (totalPage >= currentPage) {
+      SchoolService.getSchoolList(currentPage).then((v) {
+        if (v != null) {
+          Map map = json.decode(v);
+          totalPage = map['data']['totalPage'];
+          List.from(map['data']['data']).forEach((v) {
+            schoolList.add(v);
+          });
+          currentPage++;
+        }
+        setState(() {});
+      });
     }
     isLoading = false;
   }
@@ -157,19 +104,31 @@ class _SchoolyardPageState extends State<SchoolyardPage>
             ),
           ),
         ),
-        new SliverGrid(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return new Container(
-                child: SchoolDetail(schoolList[index]),
-              );
-            },
-            childCount: schoolList.length,
-          ),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
-        ),
+        schoolList.length > 0
+            ? new SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return new Container(
+                      child: SchoolDetail(schoolList[index]),
+                    );
+                  },
+                  childCount: schoolList.length,
+                ),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+              )
+            : new SliverToBoxAdapter(
+                child: new Center(
+                  child: new FlatButton.icon(
+                    onPressed: () {
+                      _initData();
+                    },
+                    icon: Icon(Icons.refresh),
+                    label: new Text('重新加载'),
+                  ),
+                ),
+              ),
       ],
     );
   }
@@ -199,7 +158,8 @@ class _SchoolDetailState extends State<SchoolDetail> {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: new CachedNetworkImageProvider(widget.data['img']),
+                image:
+                    new CachedNetworkImageProvider(widget.data['school_logo']),
                 fit: BoxFit.fill,
               ),
             ),
@@ -216,7 +176,9 @@ class _SchoolDetailState extends State<SchoolDetail> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new Text(
-                  widget.data['title'] + widget.data['id'].toString(),
+                  widget.data['school_name'] +
+                      '--' +
+                      widget.data['id'].toString(),
                   overflow: TextOverflow.ellipsis,
                 ),
                 new Container(
@@ -227,7 +189,7 @@ class _SchoolDetailState extends State<SchoolDetail> {
                       FlatButton.icon(
                         onPressed: () {
                           setState(() {
-                            widget.data['favoriteNumber']++;
+                            widget.data['favorite_number']++;
                           });
                         },
                         icon: Icon(Icons.favorite_border),
@@ -240,7 +202,7 @@ class _SchoolDetailState extends State<SchoolDetail> {
                       FlatButton.icon(
                         onPressed: () {
                           setState(() {
-                            widget.data['memberNumber']++;
+                            widget.data['member_number']++;
                           });
                         },
                         icon: Icon(Icons.group),
