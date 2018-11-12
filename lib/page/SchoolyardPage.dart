@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class SchoolyardPage extends StatefulWidget {
   @override
@@ -74,10 +75,57 @@ class _SchoolyardPageState extends State<SchoolyardPage>
     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542000047500&di=c28ffe4b26de835deecf00b1859a9ffa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7b9138ff1000d162d9f3d3c9d1.jpg',
     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1541998676962&di=fd292ee5996ddf7764802d6e7ff55920&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fd52a2834349b033b1c4bcdcf1fce36d3d439bde7.jpg',
   ];
+  ScrollController _scrollController = new ScrollController();
+  List<Map<String, dynamic>> schoolList = new List();
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initData();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        if (!isLoading) {
+          _loadMore();
+        }
+      }
+      if (_scrollController.position.pixels == 0) {
+        _initData();
+      }
+    });
+  }
+
+  void _initData() async {
+    isLoading = true;
+    print(isLoading);
+    schoolList.clear();
+    _loadData();
+    print(isLoading);
+  }
+
+  void _loadData() async {
+    for (int i = 0; i < 18; i++) {
+      Map<String, dynamic> map = {
+        "title": "河南工业大学",
+        "img": imgList[i],
+        "id": schoolList.length,
+      };
+      schoolList.add(map);
+    }
+    isLoading = false;
+  }
+
+  void _loadMore() async {
+    _loadData();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      controller: _scrollController,
       physics: ScrollPhysics(),
       slivers: <Widget>[
         new SliverAppBar(
@@ -109,10 +157,10 @@ class _SchoolyardPageState extends State<SchoolyardPage>
           delegate: SliverChildBuilderDelegate(
             (context, index) {
               return new Container(
-                child: SchoolDetail(imgList[index]),
+                child: SchoolDetail(schoolList[index]),
               );
             },
-            childCount: 15,
+            childCount: schoolList.length,
           ),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -124,9 +172,9 @@ class _SchoolyardPageState extends State<SchoolyardPage>
 }
 
 class SchoolDetail extends StatelessWidget {
-  final String bgImg;
+  final Map<String, dynamic> data;
 
-  SchoolDetail(this.bgImg);
+  SchoolDetail(this.data);
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +188,7 @@ class SchoolDetail extends StatelessWidget {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                  image: NetworkImage(bgImg), fit: BoxFit.fill),
+                  image: NetworkImage(data['img']), fit: BoxFit.fill),
             ),
             alignment: Alignment.bottomCenter,
             margin: const EdgeInsets.all(1.0),
@@ -155,7 +203,7 @@ class SchoolDetail extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new Text(
-                  '河南工业大学',
+                  data['title'] + data['id'].toString(),
                   overflow: TextOverflow.ellipsis,
                 ),
                 new Container(
