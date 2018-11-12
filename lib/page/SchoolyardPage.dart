@@ -46,9 +46,9 @@ class _SchoolyardPageState extends State<SchoolyardPage>
     currentPage = 1;
     recommendList.clear();
     schoolList.clear();
+    setState(() {});
     _loadData();
     isLoading = false;
-    setState(() {});
   }
 
   void _loadData() async {
@@ -145,7 +145,11 @@ class _SchoolyardPageState extends State<SchoolyardPage>
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
-          _scrollController.jumpTo(0.0);
+          _scrollController.animateTo(
+            .0,
+            duration: const Duration(milliseconds: 800),
+            curve: Curves.ease,
+          );
         },
         child: Icon(Icons.arrow_upward),
         tooltip: '向上',
