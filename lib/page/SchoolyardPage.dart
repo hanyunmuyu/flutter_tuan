@@ -198,7 +198,7 @@ class _SchoolDetailState extends State<SchoolDetail> {
                         },
                         icon: Icon(Icons.favorite_border),
                         label: new Text(
-                          widget.data['favoriteNumber'].toString(),
+                          widget.data['favorite_number'].toString(),
                           textScaleFactor: 1.2,
                         ),
                         textColor: Theme.of(context).primaryColor,
@@ -211,7 +211,7 @@ class _SchoolDetailState extends State<SchoolDetail> {
                         },
                         icon: Icon(Icons.group),
                         label: new Text(
-                          widget.data['memberNumber'].toString(),
+                          widget.data['member_number'].toString(),
                           textScaleFactor: 1.2,
                         ),
                         textColor: Theme.of(context).primaryColor,
