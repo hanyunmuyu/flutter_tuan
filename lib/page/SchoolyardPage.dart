@@ -99,18 +99,20 @@ class _SchoolyardPageState extends State<SchoolyardPage>
 
   void _initData() async {
     isLoading = true;
-    print(isLoading);
     schoolList.clear();
     _loadData();
-    print(isLoading);
+    isLoading = false;
   }
 
   void _loadData() async {
+    isLoading = true;
     for (int i = 0; i < 18; i++) {
       Map<String, dynamic> map = {
         "title": "河南工业大学",
         "img": imgList[i],
         "id": schoolList.length,
+        "favoriteNumber": i * 10,
+        "memberNumber": i * 20
       };
       schoolList.add(map);
     }
@@ -118,8 +120,10 @@ class _SchoolyardPageState extends State<SchoolyardPage>
   }
 
   void _loadMore() async {
+    isLoading = true;
     _loadData();
     setState(() {});
+    isLoading = false;
   }
 
   @override
@@ -171,16 +175,23 @@ class _SchoolyardPageState extends State<SchoolyardPage>
   }
 }
 
-class SchoolDetail extends StatelessWidget {
+class SchoolDetail extends StatefulWidget {
   final Map<String, dynamic> data;
 
   SchoolDetail(this.data);
 
   @override
+  State createState() {
+    return new _SchoolDetailState();
+  }
+}
+
+class _SchoolDetailState extends State<SchoolDetail> {
+  @override
   Widget build(BuildContext context) {
     return new GestureDetector(
       onTap: () {
-        print('1111');
+        print(widget.data);
       },
       child: new Stack(
         alignment: Alignment.bottomCenter,
@@ -188,7 +199,7 @@ class SchoolDetail extends StatelessWidget {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                  image: NetworkImage(data['img']), fit: BoxFit.fill),
+                  image: NetworkImage(widget.data['img']), fit: BoxFit.fill),
             ),
             alignment: Alignment.bottomCenter,
             margin: const EdgeInsets.all(1.0),
@@ -203,7 +214,7 @@ class SchoolDetail extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new Text(
-                  data['title'] + data['id'].toString(),
+                  widget.data['title'] + widget.data['id'].toString(),
                   overflow: TextOverflow.ellipsis,
                 ),
                 new Container(
@@ -212,19 +223,27 @@ class SchoolDetail extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       FlatButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            widget.data['favoriteNumber']++;
+                          });
+                        },
                         icon: Icon(Icons.favorite_border),
                         label: new Text(
-                          '100',
+                          widget.data['favoriteNumber'].toString(),
                           textScaleFactor: 1.2,
                         ),
                         textColor: Theme.of(context).primaryColor,
                       ),
                       FlatButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            widget.data['memberNumber']++;
+                          });
+                        },
                         icon: Icon(Icons.group),
                         label: new Text(
-                          '100',
+                          widget.data['memberNumber'].toString(),
                           textScaleFactor: 1.2,
                         ),
                         textColor: Theme.of(context).primaryColor,
