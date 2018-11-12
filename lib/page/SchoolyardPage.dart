@@ -18,6 +18,7 @@ class _SchoolyardPageState extends State<SchoolyardPage>
 
   ScrollController _scrollController = new ScrollController();
   List<Map<String, dynamic>> schoolList = new List();
+  List<Map<String, dynamic>> recommendList = new List();
   bool isLoading = false;
   int currentPage = 1;
   int totalPage = 1;
@@ -43,6 +44,7 @@ class _SchoolyardPageState extends State<SchoolyardPage>
   void _initData() async {
     isLoading = true;
     currentPage = 1;
+    recommendList.clear();
     schoolList.clear();
     _loadData();
     isLoading = false;
@@ -54,8 +56,11 @@ class _SchoolyardPageState extends State<SchoolyardPage>
       SchoolService.getSchoolList(currentPage).then((v) {
         if (v != null) {
           Map map = json.decode(v);
-          totalPage = map['data']['totalPage'];
-          List.from(map['data']['data']).forEach((v) {
+          List.from(map['data']['schoolRecommend']).forEach((v) {
+            recommendList.add(v);
+          });
+          totalPage = map['data']['schoolList']['totalPage'];
+          List.from(map['data']['schoolList']['data']).forEach((v) {
             schoolList.add(v);
           });
           currentPage++;
@@ -88,19 +93,20 @@ class _SchoolyardPageState extends State<SchoolyardPage>
           ),
           centerTitle: true,
           backgroundColor: Colors.white,
-          expandedHeight: 160.0,
+          expandedHeight: recommendList.length > 2 ? 180.0 : 70.0,
           flexibleSpace: new Container(
-            margin: const EdgeInsets.only(top: 50.0),
+            margin: const EdgeInsets.only(top: 30.0),
             child: new ListView.builder(
               itemBuilder: (context, index) {
                 return new ListTile(
                   onTap: () {
-                    print(111);
+                    print(recommendList[index]);
                   },
-                  title: new Text('河南工业大学-' + '$index'),
+                  title: new Text(recommendList[index]['school_name']),
+                  trailing: Icon(Icons.keyboard_arrow_right),
                 );
               },
-              itemCount: 16,
+              itemCount: recommendList.length,
             ),
           ),
         ),
@@ -176,9 +182,7 @@ class _SchoolDetailState extends State<SchoolDetail> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new Text(
-                  widget.data['school_name'] +
-                      '--' +
-                      widget.data['id'].toString(),
+                  widget.data['school_name'],
                   overflow: TextOverflow.ellipsis,
                 ),
                 new Container(
