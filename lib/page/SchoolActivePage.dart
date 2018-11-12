@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tuan/widget/city_picker.dart';
 
 class SchoolActivePage extends StatefulWidget {
   @override
@@ -20,6 +21,8 @@ class _SchoolActivePageState extends State<SchoolActivePage>
     new ListTile(
       leading: new Text('相关[校园]'),
       title: new Text('1'),
+      onTap: () {
+      },
     ),
     new ListTile(
       leading: new Text('相关[社团]'),
@@ -40,7 +43,30 @@ class _SchoolActivePageState extends State<SchoolActivePage>
     return new Container(
       width: double.infinity,
       child: new Column(
-        children: children,
+        children: <Widget>[
+          new Center(
+            child: new Text('榜单推荐'),
+          ),
+          new ListTile(
+            leading: new Text('相关[校园]'),
+            title: new Text('1'),
+            onTap: () {
+              CityPicker.showCityPicker(context);
+            },
+          ),
+          new ListTile(
+            leading: new Text('相关[社团]'),
+            title: new Text('1'),
+          ),
+          new ListTile(
+            leading: new Text('热门[校园]'),
+            title: new Text('1'),
+          ),
+          new ListTile(
+            leading: new Text('热门[国内]'),
+            title: new Text('1'),
+          ),
+        ],
       ),
     );
   }
