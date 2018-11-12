@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 class HttpClient {
   static get(String path, Map<String, dynamic> mapData) async {
     Options options = new Options(
-      baseUrl: "http://192.168.0.105:88",
+      baseUrl: "http://192.168.1.66:88",
       connectTimeout: 5000,
       receiveTimeout: 3000,
     );
@@ -14,7 +14,7 @@ class HttpClient {
 
   static Future post(String path, Map<String, dynamic> mapData) async {
     Options options = new Options(
-      baseUrl: "http://192.168.0.105:88",
+      baseUrl: "http://192.168.1.66:88",
       connectTimeout: 5000,
       receiveTimeout: 10000,
       responseType: ResponseType.PLAIN,

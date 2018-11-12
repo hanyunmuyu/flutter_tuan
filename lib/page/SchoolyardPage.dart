@@ -80,6 +80,31 @@ class _SchoolyardPageState extends State<SchoolyardPage>
     return CustomScrollView(
       physics: ScrollPhysics(),
       slivers: <Widget>[
+        new SliverAppBar(
+          title: new Text(
+            '热门高校',
+            softWrap: true,
+            style: new TextStyle(color: Theme.of(context).primaryColor),
+            textScaleFactor: .8,
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          expandedHeight: 160.0,
+          flexibleSpace: new Container(
+            margin: const EdgeInsets.only(top: 50.0),
+            child: new ListView.builder(
+              itemBuilder: (context, index) {
+                return new ListTile(
+                  onTap: () {
+                    print(111);
+                  },
+                  title: new Text('河南工业大学-' + '$index'),
+                );
+              },
+              itemCount: 16,
+            ),
+          ),
+        ),
         new SliverGrid(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
