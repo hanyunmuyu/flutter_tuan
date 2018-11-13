@@ -41,20 +41,19 @@ class _SchoolyardPageState extends State<SchoolyardPage>
     });
   }
 
-  void _initData() async {
+  Future<Null> _initData() async {
     isLoading = true;
     currentPage = 1;
     recommendList.clear();
     schoolList.clear();
     setState(() {});
     _loadData();
-    isLoading = false;
   }
 
   void _loadData() async {
-    isLoading = true;
     if (totalPage >= currentPage) {
       SchoolService.getSchoolList(currentPage).then((v) {
+        isLoading = false;
         if (v != null) {
           Map map = json.decode(v);
           List.from(map['data']['schoolRecommend']).forEach((v) {
@@ -82,66 +81,71 @@ class _SchoolyardPageState extends State<SchoolyardPage>
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: CustomScrollView(
-        controller: _scrollController,
-        physics: ScrollPhysics(),
-        slivers: <Widget>[
-          recommendList.length > 0
-              ? new SliverAppBar(
-                  title: new Text(
-                    '热门高校',
-                    softWrap: true,
-                    style: new TextStyle(color: Theme.of(context).primaryColor),
-                    textScaleFactor: .8,
+      body: new RefreshIndicator(
+        child: CustomScrollView(
+          controller: _scrollController,
+          physics: ScrollPhysics(),
+          slivers: <Widget>[
+            recommendList.length > 0
+                ? new SliverAppBar(
+                    title: new Text(
+                      '热门高校',
+                      softWrap: true,
+                      style:
+                          new TextStyle(color: Theme.of(context).primaryColor),
+                      textScaleFactor: .8,
+                    ),
+                    centerTitle: true,
+                    backgroundColor: Colors.white,
+                    expandedHeight: recommendList.length > 2 ? 180.0 : 70.0,
+                    flexibleSpace: new Container(
+                      margin: const EdgeInsets.only(top: 30.0),
+                      child: new ListView.builder(
+                        itemBuilder: (context, index) {
+                          return new ListTile(
+                            onTap: () {
+                              print(recommendList[index]);
+                            },
+                            title:
+                                new Text(recommendList[index]['school_name']),
+                            trailing: Icon(Icons.keyboard_arrow_right),
+                          );
+                        },
+                        itemCount: recommendList.length,
+                      ),
+                    ),
+                  )
+                : new SliverToBoxAdapter(
+                    child: new Text(''),
                   ),
-                  centerTitle: true,
-                  backgroundColor: Colors.white,
-                  expandedHeight: recommendList.length > 2 ? 180.0 : 70.0,
-                  flexibleSpace: new Container(
-                    margin: const EdgeInsets.only(top: 30.0),
-                    child: new ListView.builder(
-                      itemBuilder: (context, index) {
-                        return new ListTile(
-                          onTap: () {
-                            print(recommendList[index]);
-                          },
-                          title: new Text(recommendList[index]['school_name']),
-                          trailing: Icon(Icons.keyboard_arrow_right),
+            schoolList.length > 0
+                ? new SliverGrid(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return new Container(
+                          child: SchoolDetail(schoolList[index]),
                         );
                       },
-                      itemCount: recommendList.length,
+                      childCount: schoolList.length,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                  )
+                : new SliverToBoxAdapter(
+                    child: new Center(
+                      child: new FlatButton.icon(
+                        onPressed: () {
+                          _initData();
+                        },
+                        icon: Icon(Icons.refresh),
+                        label: new Text('重新加载'),
+                      ),
                     ),
                   ),
-                )
-              : new SliverToBoxAdapter(
-                  child: new Text(''),
-                ),
-          schoolList.length > 0
-              ? new SliverGrid(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return new Container(
-                        child: SchoolDetail(schoolList[index]),
-                      );
-                    },
-                    childCount: schoolList.length,
-                  ),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                )
-              : new SliverToBoxAdapter(
-                  child: new Center(
-                    child: new FlatButton.icon(
-                      onPressed: () {
-                        _initData();
-                      },
-                      icon: Icon(Icons.refresh),
-                      label: new Text('重新加载'),
-                    ),
-                  ),
-                ),
-        ],
+          ],
+        ),
+        onRefresh: _initData,
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
