@@ -170,6 +170,7 @@ class _CommunityPageState extends State<CommunityPage>
             onRefresh: () => _initData(store),
           ),
           floatingActionButton: new FloatingActionButton(
+            heroTag: 'CommunityPage',
             onPressed: () {
               _scrollController.animateTo(
                 .0,

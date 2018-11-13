@@ -160,6 +160,7 @@ class _SchoolyardPageState extends State<SchoolyardPage>
         onRefresh: _initData,
       ),
       floatingActionButton: new FloatingActionButton(
+        heroTag: 'SchoolyardPage',
         onPressed: () {
           _scrollController.animateTo(
             .0,

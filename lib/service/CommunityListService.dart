@@ -7,7 +7,6 @@ class CommunityListService {
     if (store.state.user != null) {
       token = store.state.user.data['api_token'];
     }
-    print(token);
     return HttpClient.get(
         '/api/v1/community', {"page": page, "api_token": token});
   }
