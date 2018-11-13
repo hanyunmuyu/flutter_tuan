@@ -3,6 +3,43 @@
 高校社团
 
 ## Getting Started
+配置说明
+
+修改API的地址
+```
+import 'package:dio/dio.dart';
+
+class HttpClient {
+  static Options options = new Options(
+    baseUrl: "http://192.168.1.66:88", 这里配置了你的API地址
+    connectTimeout: 5000,
+    receiveTimeout: 3000,
+    responseType: ResponseType.PLAIN,
+  );
+  static Dio dio = new Dio(options);
+
+  static get(String path, Map<String, dynamic> mapData) async {
+    var response = await dio.get(path, data: mapData);
+    return response.data.toString();
+  }
+
+  static Future post(String path, Map<String, dynamic> mapData) async {
+    Response response;
+    try {
+      response = await dio.post(path, data: mapData);
+      return response.data.toString();
+    } on DioError catch (e) {
+      if (e.response == null) {
+        if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+          return '''{"code": 500}''';
+        }
+      }
+    }
+  }
+}
+
+
+```
 
 For help getting started with Flutter, view our online
 [documentation](https://flutter.io/).
