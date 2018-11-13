@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_tuan/common/redux/AppState.dart';
@@ -70,6 +71,7 @@ class _CommunityPageState extends State<CommunityPage>
       if (mounted) {
         setState(() {});
       }
+      isLoading = false;
     });
   }
 
@@ -91,27 +93,28 @@ class _CommunityPageState extends State<CommunityPage>
     return new StoreConnector<AppState, Store>(
       builder: (context, store) {
         this.store = store;
-        return RefreshIndicator(
+        return new Scaffold(
+          body: RefreshIndicator(
             child: new CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[
-                SliverAppBar(
-                  floating: true,
-                  snap: true,
-                  title: new Text(
-                    '我的关注',
-                    textScaleFactor: .8,
-                    style: new TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  centerTitle: true,
-                  backgroundColor: Colors.white,
-                  expandedHeight: 200.0,
-                  flexibleSpace: new Container(
-                    margin: const EdgeInsets.only(top: 30.0),
-                    child: userCommunityList.length > 0
-                        ? new ListView.builder(
+                userCommunityList.length > 0
+                    ? SliverAppBar(
+                        floating: true,
+                        snap: true,
+                        title: new Text(
+                          '我的关注',
+                          textScaleFactor: .8,
+                          style: new TextStyle(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        centerTitle: true,
+                        backgroundColor: Colors.white,
+                        expandedHeight: 200.0,
+                        flexibleSpace: new Container(
+                          margin: const EdgeInsets.only(top: 30.0),
+                          child: new ListView.builder(
                             itemBuilder: (context, index) {
                               return new ListTile(
                                 onTap: () {
@@ -123,58 +126,166 @@ class _CommunityPageState extends State<CommunityPage>
                               );
                             },
                             itemCount: userCommunityList.length,
-                          )
-                        : new FlatButton(
-                            onPressed: () {},
-                            child: new Text(
-                              '去关注',
-                              textScaleFactor: .8,
-                              style: new TextStyle(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
                           ),
-                  ),
-                ),
-                new SliverFixedExtentList(
-                  delegate: new SliverChildBuilderDelegate(
-                    (context, index) => new ListTile(
-                          title: new Text('$index'),
                         ),
-                    childCount: 10,
-                  ),
-                  itemExtent: 120.0,
-                ),
-                new SliverList(
-                  delegate: new SliverChildBuilderDelegate(
-                    (context, index) => new Text('$index'),
-                    childCount: 10,
-                  ),
-                ),
-                new SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _SliverHeader(
-                    maxHeight: 120.0,
-                    minHeight: 60.0,
-                    child: new Center(
-                      child: new Text('SliverPersistentHeader'),
-                    ),
-                  ),
-                ),
-                new SliverGrid(
-                  delegate: new SliverChildBuilderDelegate(
-                    (context, index) => new Icon(Icons.person),
-                    childCount: 20, //总个数
-                  ),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, //每行个数
-                  ),
-                ),
+                      )
+                    : SliverToBoxAdapter(
+                        child: new Text(''),
+                      ),
+//                new SliverFixedExtentList(
+//                  delegate: new SliverChildBuilderDelegate(
+//                    (context, index) => new ListTile(
+//                          title: new Text('$index'),
+//                        ),
+//                    childCount: 10,
+//                  ),
+//                  itemExtent: 120.0,
+//                ),
+//                new SliverList(
+//                  delegate: new SliverChildBuilderDelegate(
+//                    (context, index) => new Text('$index'),
+//                    childCount: 10,
+//                  ),
+//                ),
+//                new SliverPersistentHeader(
+//                  pinned: true,
+//                  delegate: _SliverHeader(
+//                    maxHeight: 120.0,
+//                    minHeight: 60.0,
+//                    child: new Center(
+//                      child: new Text('SliverPersistentHeader'),
+//                    ),
+//                  ),
+//                ),
+                communityList.length > 0
+                    ? new SliverGrid(
+                        delegate: new SliverChildBuilderDelegate(
+                          (context, index) => new CommunityDetail(
+                                communityList[index],
+                              ),
+                          childCount: communityList.length, //总个数
+                        ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, //每行个数
+                        ),
+                      )
+                    : new SliverToBoxAdapter(
+                        child: new Center(
+                          child: new FlatButton.icon(
+                            onPressed: () {
+                              _initData(store);
+                            },
+                            icon: Icon(Icons.refresh),
+                            label: new Text('重新加载'),
+                          ),
+                        ),
+                      ),
               ],
             ),
-            onRefresh: () => _initData(store));
+            onRefresh: () => _initData(store),
+          ),
+          floatingActionButton: new FloatingActionButton(
+            onPressed: () {
+              _scrollController.animateTo(
+                .0,
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.ease,
+              );
+            },
+            child: new Icon(Icons.arrow_upward),
+          ),
+        );
       },
       converter: (store) => store,
+    );
+  }
+}
+
+class CommunityDetail extends StatefulWidget {
+  final Map<String, dynamic> data;
+
+  CommunityDetail(this.data);
+
+  @override
+  State createState() {
+    return new _CommunityDetailState();
+  }
+}
+
+class _CommunityDetailState extends State<CommunityDetail> {
+  @override
+  Widget build(BuildContext context) {
+    return new GestureDetector(
+      onTap: () {
+        print(widget.data);
+      },
+      child: new Stack(
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          new Container(
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                image: new CachedNetworkImageProvider(
+                  widget.data['community_logo'],
+                ),
+                fit: BoxFit.fill,
+              ),
+            ),
+            alignment: Alignment.bottomCenter,
+            margin: const EdgeInsets.all(1.0),
+            width: double.infinity,
+          ),
+          new Container(
+            color: Colors.white,
+            alignment: Alignment.bottomCenter,
+            height: 70.0,
+            width: double.infinity,
+            child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                new Text(
+                  widget.data['community_name'],
+                  overflow: TextOverflow.ellipsis,
+                ),
+                new Container(
+                  child: new Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FlatButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            widget.data['favorite_number']++;
+                          });
+                        },
+                        icon: Icon(Icons.favorite_border),
+                        label: new Text(
+                          widget.data['favorite_number'].toString(),
+                          textScaleFactor: 1.2,
+                        ),
+                        textColor: Theme.of(context).primaryColor,
+                      ),
+                      FlatButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            widget.data['member_number']++;
+                          });
+                        },
+                        icon: Icon(Icons.group),
+                        label: new Text(
+                          widget.data['member_number'].toString(),
+                          textScaleFactor: 1.2,
+                        ),
+                        textColor: Theme.of(context).primaryColor,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
