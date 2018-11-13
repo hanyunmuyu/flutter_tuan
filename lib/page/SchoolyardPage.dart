@@ -46,7 +46,9 @@ class _SchoolyardPageState extends State<SchoolyardPage>
     currentPage = 1;
     recommendList.clear();
     schoolList.clear();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
     _loadData();
   }
 
@@ -65,7 +67,9 @@ class _SchoolyardPageState extends State<SchoolyardPage>
           });
           currentPage++;
         }
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+        }
       });
     }
     isLoading = false;
@@ -75,7 +79,9 @@ class _SchoolyardPageState extends State<SchoolyardPage>
     isLoading = true;
     _loadData();
     isLoading = false;
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
