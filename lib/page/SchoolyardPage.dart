@@ -41,6 +41,12 @@ class _SchoolyardPageState extends State<SchoolyardPage>
     });
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   Future<Null> _initData() async {
     isLoading = true;
     currentPage = 1;

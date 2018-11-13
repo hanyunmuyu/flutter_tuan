@@ -42,7 +42,7 @@ class _CommunityPageState extends State<CommunityPage>
       }
     }
     if (_scrollController.position.pixels == 0) {
-      _loadData(store);
+      _initData(store);
     }
   }
 
@@ -78,6 +78,9 @@ class _CommunityPageState extends State<CommunityPage>
   void _loadMore(Store store) async {
     isLoading = true;
     await _loadData(store);
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<Null> _initData(Store store) async {
@@ -86,6 +89,15 @@ class _CommunityPageState extends State<CommunityPage>
     communityList.clear();
     userCommunityList.clear();
     await _loadData(store);
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -132,31 +144,6 @@ class _CommunityPageState extends State<CommunityPage>
                     : SliverToBoxAdapter(
                         child: new Text(''),
                       ),
-//                new SliverFixedExtentList(
-//                  delegate: new SliverChildBuilderDelegate(
-//                    (context, index) => new ListTile(
-//                          title: new Text('$index'),
-//                        ),
-//                    childCount: 10,
-//                  ),
-//                  itemExtent: 120.0,
-//                ),
-//                new SliverList(
-//                  delegate: new SliverChildBuilderDelegate(
-//                    (context, index) => new Text('$index'),
-//                    childCount: 10,
-//                  ),
-//                ),
-//                new SliverPersistentHeader(
-//                  pinned: true,
-//                  delegate: _SliverHeader(
-//                    maxHeight: 120.0,
-//                    minHeight: 60.0,
-//                    child: new Center(
-//                      child: new Text('SliverPersistentHeader'),
-//                    ),
-//                  ),
-//                ),
                 communityList.length > 0
                     ? new SliverGrid(
                         delegate: new SliverChildBuilderDelegate(
@@ -170,14 +157,12 @@ class _CommunityPageState extends State<CommunityPage>
                         ),
                       )
                     : new SliverToBoxAdapter(
-                        child: new Center(
-                          child: new FlatButton.icon(
-                            onPressed: () {
-                              _initData(store);
-                            },
-                            icon: Icon(Icons.refresh),
-                            label: new Text('重新加载'),
-                          ),
+                        child: new FlatButton.icon(
+                          onPressed: () {
+                            _initData(store);
+                          },
+                          icon: Icon(Icons.refresh),
+                          label: new Text('重新加载'),
                         ),
                       ),
               ],
