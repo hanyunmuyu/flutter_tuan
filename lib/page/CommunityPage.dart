@@ -98,9 +98,43 @@ class _CommunityPageState extends State<CommunityPage>
                 SliverAppBar(
                   floating: true,
                   snap: true,
-                  title: new Text('SliverAppBar'),
-                  backgroundColor: Theme.of(context).primaryColor,
+                  title: new Text(
+                    '我的关注',
+                    textScaleFactor: .8,
+                    style: new TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  centerTitle: true,
+                  backgroundColor: Colors.white,
                   expandedHeight: 200.0,
+                  flexibleSpace: new Container(
+                    margin: const EdgeInsets.only(top: 30.0),
+                    child: userCommunityList.length > 0
+                        ? new ListView.builder(
+                            itemBuilder: (context, index) {
+                              return new ListTile(
+                                onTap: () {
+                                  print(userCommunityList[index]);
+                                },
+                                title: new Text(
+                                    userCommunityList[index]['community_name']),
+                                trailing: Icon(Icons.keyboard_arrow_right),
+                              );
+                            },
+                            itemCount: userCommunityList.length,
+                          )
+                        : new FlatButton(
+                            onPressed: () {},
+                            child: new Text(
+                              '去关注',
+                              textScaleFactor: .8,
+                              style: new TextStyle(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                  ),
                 ),
                 new SliverFixedExtentList(
                   delegate: new SliverChildBuilderDelegate(
