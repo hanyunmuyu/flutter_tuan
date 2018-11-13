@@ -275,36 +275,3 @@ class _CommunityDetailState extends State<CommunityDetail> {
     );
   }
 }
-
-class _SliverHeader extends SliverPersistentHeaderDelegate {
-  final double minHeight;
-  final double maxHeight;
-  final Widget child;
-
-  _SliverHeader({this.minHeight, this.maxHeight, this.child});
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return new SizedBox.expand(
-      child: child,
-    );
-  }
-
-  @override
-  bool shouldRebuild(_SliverHeader oldDelegate) {
-    return (maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child);
-  }
-
-  @override
-  double get maxExtent {
-    return max(maxHeight, minHeight);
-  }
-
-  @override
-  double get minExtent {
-    return minHeight;
-  }
-}
