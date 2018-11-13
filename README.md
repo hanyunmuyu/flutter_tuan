@@ -3,6 +3,14 @@
 高校社团
 
 ## Getting Started
+
+效果图
+
+![高校列表效果图](https://github.com/hanyunmuyu/flutter_tuan/img/高校.png);
+
+![高校列表效果图](https://github.com/hanyunmuyu/flutter_tuan/img/个人中心.png);
+
+
 [API地址](https://github.com/hanyunmuyu/tuan.git)
 
 配置说明
