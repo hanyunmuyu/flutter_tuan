@@ -6,9 +6,9 @@
 
 效果图
 
-![高校列表效果图](https://github.com/hanyunmuyu/flutter_tuan/img/高校.png);
+![高校列表效果图](https://github.com/hanyunmuyu/flutter_tuan/blob/master/img/school.png);
 
-![高校列表效果图](https://github.com/hanyunmuyu/flutter_tuan/img/个人中心.png);
+![个人中心](https://github.com/hanyunmuyu/flutter_tuan/blob/master/img/usercenter.png);
 
 
 [API地址](https://github.com/hanyunmuyu/tuan.git)
