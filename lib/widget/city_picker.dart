@@ -74,30 +74,12 @@ class _CityPickerWidget extends StatefulWidget {
 class _CityPickerState extends State<_CityPickerWidget> {
   FixedExtentScrollController fixedExtentScrollController =
       new FixedExtentScrollController();
-  List<Map<String, dynamic>> data = [
-    {"id": 1, "name": "1111"},
-    {"id": 1, "name": "1111"},
-  ];
-  List<Map<String, dynamic>> data1 = [
-    {"id": 1, "name": "1111"},
-  ];
-
   Widget _bottomView() {
-    Widget city = new _Picker(
-      data: data1,
-      changeData: (index) {},
-    );
-    Widget province = new _Picker(
-      data: data,
-      changeData: (index) {},
-      child: city,
-    );
-
     return new Container(
       alignment: Alignment.bottomCenter,
       color: Colors.white,
       width: double.infinity,
-      height: 210.0,
+      height: 300.0,
       child: new Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -132,13 +114,7 @@ class _CityPickerState extends State<_CityPickerWidget> {
           ),
           new Expanded(
             flex: 1,
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                province,
-                city,
-              ],
-            ),
+            child: new _PickerContent(),
           ),
         ],
       ),
@@ -168,13 +144,1022 @@ class _CityPickerState extends State<_CityPickerWidget> {
   }
 }
 
+class _PickerContent extends StatefulWidget {
+  @override
+  State createState() {
+    return new _PickerContentState();
+  }
+}
+
+class _PickerContentState extends State<_PickerContent> {
+  List<Map<String, dynamic>> data = new List<Map<String, dynamic>>();
+
+  @override
+  void initState() {
+    super.initState();
+    data = [
+      {
+        "id": 1,
+        "name": "name1",
+        "sub": [
+          {
+            "id": 1,
+            "name": "name11111",
+            "sub": [
+              {
+                "id": 1,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 2,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 3,
+                "name": "name111111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+            ]
+          },
+          {
+            "id": 2,
+            "name": "name11111",
+            "sub": [
+              {
+                "id": 1,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 2,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 3,
+                "name": "name111111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+            ]
+          },
+          {
+            "id": 3,
+            "name": "name111111",
+            "sub": [
+              {
+                "id": 1,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 2,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 3,
+                "name": "name111111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+            ]
+          },
+        ]
+      },
+      {
+        "id": 1,
+        "name": "name1",
+        "sub": [
+          {
+            "id": 1,
+            "name": "name11111",
+            "sub": [
+              {
+                "id": 1,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 2,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 3,
+                "name": "name111111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+            ]
+          },
+          {
+            "id": 2,
+            "name": "name11111",
+            "sub": [
+              {
+                "id": 1,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 2,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 3,
+                "name": "name111111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+            ]
+          },
+          {
+            "id": 3,
+            "name": "name111111",
+            "sub": [
+              {
+                "id": 1,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 2,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 3,
+                "name": "name111111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+            ]
+          },
+        ]
+      },
+      {
+        "id": 1,
+        "name": "name222222222",
+        "sub": [
+          {
+            "id": 1,
+            "name": "name222222222",
+            "sub": [
+              {
+                "id": 1,
+                "name": "333333333",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "subname11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 2,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 3,
+                "name": "name111111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+            ]
+          },
+          {
+            "id": 2,
+            "name": "name11111",
+            "sub": [
+              {
+                "id": 1,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 2,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 3,
+                "name": "name111111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+            ]
+          },
+          {
+            "id": 3,
+            "name": "name111111",
+            "sub": [
+              {
+                "id": 1,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 2,
+                "name": "name11111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+              {
+                "id": 3,
+                "name": "name111111",
+                "sub": [
+                  {
+                    "id": 1,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 2,
+                    "name": "name11111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                  {
+                    "id": 3,
+                    "name": "name111111",
+                    "sub": [
+                      {"id": 1, "name": "name11111"},
+                      {"id": 2, "name": "name11111"},
+                      {"id": 3, "name": "name111111"},
+                    ]
+                  },
+                ]
+              },
+            ]
+          },
+        ]
+      },
+    ];
+  }
+
+  int index1 = 0, index2 = 0, index3 = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return new Row(
+      children: <Widget>[
+        new _Picker(
+          data: data,
+          changeData: (index) {
+            setState(() {
+              index1 = index;
+            });
+          },
+        ),
+        new _Picker(
+          data: data[index1]['sub'],
+          changeData: (index) {
+            setState(() {
+              index2 = index;
+            });
+          },
+        ),
+        new _Picker(
+          data: data[index1]['sub'][index2]['sub'],
+        ),
+      ],
+    );
+  }
+}
+
 class _Picker extends StatefulWidget {
   final List<Map<String, dynamic>> data;
   final ChangeData changeData;
   final _Picker child;
 
   _Picker({this.data, this.changeData, this.child});
-
 
   @override
   State createState() {
@@ -183,20 +1168,6 @@ class _Picker extends StatefulWidget {
 }
 
 class _PickerState extends State<_Picker> {
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    print(widget.data);
-  }
-
-  @override
-  void didUpdateWidget(_Picker oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-    print(widget.data);
-  }
-
   @override
   Widget build(BuildContext context) {
     return new Expanded(
@@ -208,20 +1179,17 @@ class _PickerState extends State<_Picker> {
           backgroundColor: Colors.white,
           itemExtent: 30.0,
           onSelectedItemChanged: (index) {
-            print(widget.data[index]);
-
             if (widget.changeData != null) {
               widget.changeData(index);
             }
-            if (widget.child != null) {
-            }
+            if (widget.child != null) {}
           },
           children: widget.data.map((v) {
             return new Container(
               alignment: Alignment.centerLeft,
               width: double.infinity,
               child: new Text(
-                v.toString(),
+                v['name'].toString(),
                 textScaleFactor: 1.2,
               ),
             );
