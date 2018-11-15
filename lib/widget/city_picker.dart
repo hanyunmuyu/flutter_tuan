@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 typedef void ChangeData(int index);
+typedef void UpdateData(List<Map<String, dynamic>> data);
 
 class CityPicker {
   static void showCityPicker(BuildContext context) {
@@ -82,18 +83,16 @@ class _CityPickerState extends State<_CityPickerWidget> {
   ];
 
   Widget _bottomView() {
-    Widget province = new _Picker(
-      data: data,
-      changeData: (index) {
-        setState(() {
-          data1.add(data[index]);
-        });
-      },
-    );
     Widget city = new _Picker(
       data: data1,
       changeData: (index) {},
     );
+    Widget province = new _Picker(
+      data: data,
+      changeData: (index) {},
+      child: city,
+    );
+
     return new Container(
       alignment: Alignment.bottomCenter,
       color: Colors.white,
@@ -172,8 +171,10 @@ class _CityPickerState extends State<_CityPickerWidget> {
 class _Picker extends StatefulWidget {
   final List<Map<String, dynamic>> data;
   final ChangeData changeData;
+  final _Picker child;
 
-  _Picker({this.data, this.changeData});
+  _Picker({this.data, this.changeData, this.child});
+
 
   @override
   State createState() {
@@ -182,6 +183,20 @@ class _Picker extends StatefulWidget {
 }
 
 class _PickerState extends State<_Picker> {
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    print(widget.data);
+  }
+
+  @override
+  void didUpdateWidget(_Picker oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print(widget.data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Expanded(
@@ -193,8 +208,12 @@ class _PickerState extends State<_Picker> {
           backgroundColor: Colors.white,
           itemExtent: 30.0,
           onSelectedItemChanged: (index) {
+            print(widget.data[index]);
+
             if (widget.changeData != null) {
               widget.changeData(index);
+            }
+            if (widget.child != null) {
             }
           },
           children: widget.data.map((v) {
