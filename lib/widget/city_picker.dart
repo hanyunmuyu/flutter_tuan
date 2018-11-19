@@ -1,35 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
-typedef void ChangeData(int index);
-typedef void UpdateData(List<Map<String, dynamic>> data);
+typedef void ChangeData(Map<String, dynamic> map);
+typedef List<Widget> CreateWidgetList();
 
 class CityPicker {
   static void showCityPicker(
-    BuildContext context,
-    List<Map<String, dynamic>> data, {
+    BuildContext context, {
     ChangeData selectProvince,
     ChangeData selectCity,
     ChangeData selectArea,
   }) {
-    Navigator.push(
-      context,
-      new _CityPickerRoute(
-          data: data,
-          selectProvince: selectProvince,
-          selectCity: selectCity,
-          selectArea: selectArea,
-          theme: Theme.of(context, shadowThemeOnly: true),
-          barrierLabel:
-              MaterialLocalizations.of(context).modalBarrierDismissLabel),
-    );
+    rootBundle.loadString('data/province.json').then((v) {
+      List data = json.decode(v);
+      Navigator.push(
+        context,
+        new _CityPickerRoute(
+            data: data,
+            selectProvince: selectProvince,
+            selectCity: selectCity,
+            selectArea: selectArea,
+            theme: Theme.of(context, shadowThemeOnly: true),
+            barrierLabel:
+                MaterialLocalizations.of(context).modalBarrierDismissLabel),
+      );
+    });
   }
 }
 
 class _CityPickerRoute<T> extends PopupRoute<T> {
   final ThemeData theme;
   final String barrierLabel;
-  final List<Map<String, dynamic>> data;
+  final List data;
   final ChangeData selectProvince;
   final ChangeData selectCity;
   final ChangeData selectArea;
@@ -86,7 +90,7 @@ class _CityPickerRoute<T> extends PopupRoute<T> {
 
 class _CityPickerWidget extends StatefulWidget {
   final _CityPickerRoute route;
-  final List<Map<String, dynamic>> data;
+  final List data;
   final ChangeData selectProvince;
   final ChangeData selectCity;
   final ChangeData selectArea;
@@ -106,84 +110,160 @@ class _CityPickerWidget extends StatefulWidget {
 }
 
 class _CityPickerState extends State<_CityPickerWidget> {
-  FixedExtentScrollController fixedExtentScrollController =
-      new FixedExtentScrollController();
+  FixedExtentScrollController provinceController;
+  FixedExtentScrollController cityController;
+  FixedExtentScrollController areaController;
   int provinceIndex = 0, cityIndex = 0, areaIndex = 0;
+  List province = new List();
+  List city = new List();
+  List area = new List();
+
+  @override
+  void initState() {
+    super.initState();
+    provinceController = new FixedExtentScrollController();
+    cityController = new FixedExtentScrollController();
+    areaController = new FixedExtentScrollController();
+    setState(() {
+      province = widget.data;
+      city = widget.data[provinceIndex]['sub'];
+      area = widget.data[provinceIndex]['sub'][cityIndex]['sub'];
+    });
+  }
 
   Widget _bottomView() {
     return new Container(
-      alignment: Alignment.bottomCenter,
-      color: Colors.white,
-      width: double.infinity,
-      height: 300.0,
-      child: new Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          new Container(
-            height: 40.0,
-            width: double.infinity,
-            child: new Row(
+        width: double.infinity,
+        color: Colors.white,
+        child: new Column(
+          children: <Widget>[
+            new Expanded(
+              child: new Row(
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: new Text(
+                      '取消',
+                      style: new TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Map<String, dynamic> provinceMap = {
+                        "code": province[provinceIndex]['code'],
+                        "name": province[provinceIndex]['name']
+                      };
+                      Map<String, dynamic> cityMap = {
+                        "code": province[provinceIndex]['sub'][cityIndex]
+                            ['code'],
+                        "name": province[provinceIndex]['sub'][cityIndex]
+                            ['name']
+                      };
+                      Map<String, dynamic> areaMap = {
+                        "code": province[provinceIndex]['sub'][cityIndex]['sub']
+                            [areaIndex]['code'],
+                        "name": province[provinceIndex]['sub'][cityIndex]['sub']
+                            [areaIndex]['name']
+                      };
+                      widget.selectProvince(provinceMap);
+                      widget.selectCity(cityMap);
+                      widget.selectArea(areaMap);
+                      Navigator.pop(context);
+                    },
+                    child: new Text(
+                      '确定',
+                      style: new TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ),
+              flex: 1,
+            ),
+            new Row(
               children: <Widget>[
-                FlatButton(
-                  onPressed: () {
-                    Navigator.pop(context);
+                new _MyCityPicker(
+                  key: Key('province'),
+                  controller: provinceController,
+                  createWidgetList: () {
+                    return province.map((v) {
+                      return new Align(
+                        child: new Text(
+                          v['name'],
+                          textScaleFactor: 1.2,
+                        ),
+                        alignment: Alignment.centerLeft,
+                      );
+                    }).toList();
                   },
-                  child: new Text(
-                    '取消',
-                    style: new TextStyle(
-                        color: Theme.of(context).unselectedWidgetColor),
-                  ),
+                  changed: (index) {
+                    setState(() {
+                      provinceIndex = index;
+                      cityIndex = 0;
+                      areaIndex = 0;
+                      cityController.jumpToItem(0);
+                      areaController.jumpToItem(0);
+                      city = widget.data[provinceIndex]['sub'];
+                      area =
+                          widget.data[provinceIndex]['sub'][cityIndex]['sub'];
+                    });
+                  },
                 ),
-                FlatButton(
-                  onPressed: () {
-                    if (widget.selectProvince != null) {
-                      widget.selectProvince(provinceIndex);
-                    }
-                    if (widget.selectCity != null) {
-                      widget.selectCity(cityIndex);
-                    }
-                    if (widget.selectArea != null) {
-                      widget.selectArea(areaIndex);
-                    }
-                    Navigator.pop(context);
+                new _MyCityPicker(
+                  key: Key('city'),
+                  controller: cityController,
+                  createWidgetList: () {
+                    return city.map((v) {
+                      return new Align(
+                        child: new Text(
+                          v['name'],
+                          textScaleFactor: 1.2,
+                        ),
+                        alignment: Alignment.centerLeft,
+                      );
+                    }).toList();
                   },
-                  child: new Text(
-                    '确定',
-                    style: new TextStyle(
-                        color: Theme.of(context).unselectedWidgetColor),
-                  ),
+                  changed: (index) {
+                    setState(() {
+                      cityIndex = index;
+                      areaIndex = 0;
+                      areaController.jumpToItem(0);
+                      area =
+                          widget.data[provinceIndex]['sub'][cityIndex]['sub'];
+                    });
+                  },
+                ),
+                new _MyCityPicker(
+                  key: Key('area'),
+                  controller: areaController,
+                  createWidgetList: () {
+                    return area.map((v) {
+                      return new Align(
+                        child: new Text(
+                          v['name'],
+                          textScaleFactor: 1.2,
+                        ),
+                        alignment: Alignment.centerLeft,
+                      );
+                    }).toList();
+                  },
+                  changed: (index) {
+                    setState(() {
+                      areaIndex = index;
+                    });
+                  },
                 ),
               ],
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            ),
-          ),
-          new Expanded(
-            flex: 1,
-            child: new Container(
-              alignment: Alignment.center,
-              child: new _PickerContent(
-                data: widget.data,
-                selectProvince: (index) {
-                  setState(() {
-                    provinceIndex = index;
-                  });
-                },
-                selectCity: (index) {
-                  setState(() {
-                    cityIndex = index;
-                  });
-                },
-                selectArea: (index) {
-                  setState(() {
-                    areaIndex = index;
-                  });
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+            )
+          ],
+        ));
   }
 
   @override
@@ -198,7 +278,11 @@ class _CityPickerState extends State<_CityPickerWidget> {
               child: new GestureDetector(
                 child: new Material(
                   color: Colors.transparent,
-                  child: _bottomView(),
+                  child: new Container(
+                    width: double.infinity,
+                    height: 260.0,
+                    child: _bottomView(),
+                  ),
                 ),
               ),
             ),
@@ -209,126 +293,47 @@ class _CityPickerState extends State<_CityPickerWidget> {
   }
 }
 
-class _PickerContent extends StatefulWidget {
-  final ChangeData selectProvince;
-  final ChangeData selectCity;
-  final ChangeData selectArea;
-  final List<Map<String, dynamic>> data;
+class _MyCityPicker extends StatefulWidget {
+  final CreateWidgetList createWidgetList;
+  final Key key;
+  final FixedExtentScrollController controller;
+  final ValueChanged<int> changed;
 
-  _PickerContent(
-      {this.data, this.selectProvince, this.selectCity, this.selectArea});
-
-  @override
-  State createState() {
-    return new _PickerContentState();
-  }
-}
-
-class _PickerContentState extends State<_PickerContent> {
-  List<Map<String, dynamic>> data = new List<Map<String, dynamic>>();
-
-  @override
-  void initState() {
-    super.initState();
-    data = widget.data;
-  }
-
-  int index1 = 0, index2 = 0, index3 = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-      height: double.infinity,
-      alignment: Alignment.center,
-      child: new Row(
-        children: <Widget>[
-          new _Picker(
-            data: data,
-            changeData: (index) {
-              if (widget.selectProvince != null) {
-                widget.selectProvince(index);
-              }
-              setState(() {
-                index1 = index;
-              });
-            },
-          ),
-          new _Picker(
-            data: data[index1]['sub'],
-            changeData: (index) {
-              if (widget.selectCity != null) {
-                widget.selectCity(index);
-              }
-              setState(() {
-                index2 = index;
-              });
-            },
-          ),
-          new _Picker(
-            data: data[index1]['sub'][index2]['sub'],
-            changeData: (index) {
-              if (widget.selectArea != null) {
-                widget.selectArea(index);
-              }
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Picker extends StatefulWidget {
-  final List<Map<String, dynamic>> data;
-  final ChangeData changeData;
-
-  _Picker({this.data, this.changeData});
+  _MyCityPicker(
+      {this.createWidgetList, this.key, this.controller, this.changed});
 
   @override
   State createState() {
-    return new _PickerState();
+    return new _MyCityPickerState();
   }
 }
 
-class _PickerState extends State<_Picker> {
-  FixedExtentScrollController _fixedExtentScrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    _fixedExtentScrollController = new FixedExtentScrollController();
-  }
+class _MyCityPickerState extends State<_MyCityPicker> {
+  List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
     return new Expanded(
-      flex: 1,
       child: new Container(
-        padding: const EdgeInsets.all(4.0),
-        decoration: BoxDecoration(color: Colors.white),
+        padding: const EdgeInsets.all(6.0),
         alignment: Alignment.center,
-        child: new CupertinoPicker(
-          scrollController: _fixedExtentScrollController,
+        height: 220.0,
+        child: CupertinoPicker(
           backgroundColor: Colors.white,
-          itemExtent: 30.0,
+          scrollController: widget.controller,
+          key: widget.key,
+          itemExtent: 40.0,
           onSelectedItemChanged: (index) {
-            if (widget.changeData != null) {
-              widget.changeData(index);
+            if (widget.changed != null) {
+              widget.changed(index);
             }
           },
-          children: widget.data.map((v) {
-            return new Container(
-              alignment: Alignment.centerLeft,
-              width: double.infinity,
-              child: new Text(
-                v['name'].toString(),
-                textScaleFactor: 1.2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            );
-          }).toList(),
+          children: widget.createWidgetList().length > 0
+              ? widget.createWidgetList()
+              : [new Text('')],
         ),
       ),
+      flex: 1,
     );
   }
 }
@@ -342,7 +347,7 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
-    double maxHeight = 510.0;
+    double maxHeight = 300.0;
 
     return new BoxConstraints(
       minWidth: constraints.maxWidth,
