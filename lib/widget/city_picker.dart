@@ -322,7 +322,7 @@ class _MyCityPickerState extends State<_MyCityPicker> {
           backgroundColor: Colors.white,
           scrollController: widget.controller,
           key: widget.key,
-          itemExtent: 40.0,
+          itemExtent: 30.0,
           onSelectedItemChanged: (index) {
             if (widget.changed != null) {
               widget.changed(index);
