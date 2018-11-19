@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_tuan/service/CommunityListService.dart';
 import 'dart:convert';
+import 'package:flutter_tuan/service/UserService.dart';
 
 class CommunityPage extends StatefulWidget {
   @override
@@ -148,6 +149,7 @@ class _CommunityPageState extends State<CommunityPage>
                     ? new SliverGrid(
                         delegate: new SliverChildBuilderDelegate(
                           (context, index) => new CommunityDetail(
+                                store,
                                 communityList[index],
                               ),
                           childCount: communityList.length, //总个数
@@ -189,8 +191,9 @@ class _CommunityPageState extends State<CommunityPage>
 
 class CommunityDetail extends StatefulWidget {
   final Map<String, dynamic> data;
+  final Store store;
 
-  CommunityDetail(this.data);
+  CommunityDetail(this.store, this.data);
 
   @override
   State createState() {
@@ -240,9 +243,23 @@ class _CommunityDetailState extends State<CommunityDetail> {
                     children: <Widget>[
                       FlatButton.icon(
                         onPressed: () {
-                          setState(() {
-                            widget.data['favorite_number']++;
-                          });
+                          UserService.payAttentionToCommunity(
+                                  widget.store, widget.data['id'])
+                              .then(
+                            (v) {
+                              Map res = json.decode(v);
+                              print(res);
+                              if (res['code'] == 200) {
+                                setState(() {
+                                  widget.data['favorite_number']++;
+                                });
+                              }
+                              Widget snackBar = new SnackBar(
+                                content: new Text(res['msg']),
+                              );
+                              Scaffold.of(context).showSnackBar(snackBar);
+                            },
+                          );
                         },
                         icon: Icon(Icons.favorite_border),
                         label: new Text(
@@ -253,9 +270,23 @@ class _CommunityDetailState extends State<CommunityDetail> {
                       ),
                       FlatButton.icon(
                         onPressed: () {
-                          setState(() {
-                            widget.data['member_number']++;
-                          });
+                          UserService.joinInCommunity(
+                                  widget.store, widget.data['id'])
+                              .then(
+                            (v) {
+                              Map res = json.decode(v);
+                              print(res);
+                              if (res['code'] == 200) {
+                                setState(() {
+                                  widget.data['member_number']++;
+                                });
+                              }
+                              Widget snackBar = new SnackBar(
+                                content: new Text(res['msg']),
+                              );
+                              Scaffold.of(context).showSnackBar(snackBar);
+                            },
+                          );
                         },
                         icon: Icon(Icons.group),
                         label: new Text(

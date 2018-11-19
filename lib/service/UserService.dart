@@ -76,4 +76,22 @@ class UserService extends BaseService {
   static Future getThemeInfo() async {
     return Storage.read(themeKey);
   }
+
+  static Future payAttentionToCommunity(Store store, int communityId) async {
+    String token;
+    if (store.state.user != null) {
+      token = store.state.user.data['api_token'];
+    }
+    return HttpClient.post(
+        '/api/v1/community/attention', {"id": communityId, "api_token": token});
+  }
+
+  static Future joinInCommunity(Store store, int communityId) async {
+    String token;
+    if (store.state.user != null) {
+      token = store.state.user.data['api_token'];
+    }
+    return HttpClient.post(
+        '/api/v1/community/join', {"id": communityId, "api_token": token});
+  }
 }
