@@ -52,7 +52,7 @@ class _UserInfoState extends State<UserInfo> {
                     new Expanded(
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: new Text('寒云'),
+                        child: new Text(store.state.user.data['name']),
                       ),
                     )
                   ],
@@ -67,7 +67,7 @@ class _UserInfoState extends State<UserInfo> {
                     new Expanded(
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: new Text('1989-03-18'),
+                        child: new Text(store.state.user.data['birth_day']),
                       ),
                     )
                   ],
@@ -118,7 +118,9 @@ class _UserInfoState extends State<UserInfo> {
                     new Expanded(
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: new Text('2010'),
+                        child: new Text(
+                          store.state.user.data['grade'].toString(),
+                        ),
                       ),
                     )
                   ],
@@ -179,43 +181,6 @@ class _UserInfoState extends State<UserInfo> {
                     selectArea: (area) {
                       print(area);
                     },
-                  );
-                },
-              ),
-              new ListTile(
-                title: new Row(
-                  children: <Widget>[
-                    new Text('专业'),
-                    new Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: new Text('经济学'),
-                      ),
-                    )
-                  ],
-                ),
-                trailing: new Icon(Icons.keyboard_arrow_right),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => new AlertDialog(
-                          title: new Text(""),
-                          content: new Text('aaaaaaa'),
-                          actions: <Widget>[
-                            new FlatButton(
-                              child: new Text("取消"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            new FlatButton(
-                              child: new Text("确定"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            )
-                          ],
-                        ),
                   );
                 },
               ),
