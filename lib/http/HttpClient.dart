@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class HttpClient {
   static Options options = new Options(
-    baseUrl: "http://192.168.0.105:88",
+    baseUrl: "http://192.168.1.66:88",
     connectTimeout: 5000,
     receiveTimeout: 3000,
     responseType: ResponseType.PLAIN,

@@ -3,8 +3,18 @@ import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_tuan/common/redux/AppState.dart';
+import 'package:flutter_tuan/widget/city_picker.dart';
 
-class UserInfo extends StatelessWidget {
+class UserInfo extends StatefulWidget {
+  @override
+  State createState() {
+    return new _UserInfoState();
+  }
+}
+
+class _UserInfoState extends State<UserInfo> {
+  Map<String, dynamic> province, city, area;
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -134,27 +144,28 @@ class UserInfo extends StatelessWidget {
                     new Expanded(
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: new Text('河南-许昌'),
+                        child: new Text(store.state.user.data['province']
+                                ['name'] +
+                            '-' +
+                            store.state.user.data['city']['name'] +
+                            '-' +
+                            store.state.user.data['area']['name']),
                       ),
                     )
                   ],
                 ),
                 trailing: new Icon(Icons.keyboard_arrow_right),
                 onTap: () {
-                  showModalBottomSheet<Null>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return new Container(
-                        child: new Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: new ListView.builder(
-                            itemBuilder: (context, index) {
-                              return new Text('河南省');
-                            },
-                            itemCount: 200,
-                          ),
-                        ),
-                      );
+                  CityPicker.showCityPicker(
+                    context,
+                    selectProvince: (province) {
+                      print(province);
+                    },
+                    selectCity: (city) {
+                      print(city);
+                    },
+                    selectArea: (area) {
+                      print(area);
                     },
                   );
                 },
