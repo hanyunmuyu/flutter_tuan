@@ -7,38 +7,47 @@
     "name": "hanyun",
     "true_name": "",
     "email": "",
-    "api_token": "9bfc2f491dd563b8642429f0962b2a39",
+    "api_token": "7cfec3b369455ea16a2c888cda5edb63",
     "email_verified_at": "",
     "avatar": "http://192.168.1.66:88/img/dog.jpg",
     "bg": "http://192.168.1.66:88/img/dog.jpg",
-    "school_id": "",
+    "school_id": 46,
     "gender": 1,
     "motto": "故天将降大任于斯人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为，所以动心忍性，曾益其所不能",
     "province": {
-      "id": 649,
-      "code": "230000",
-      "name": "黑龙江省",
+      "id": 2456,
+      "code": "520000",
+      "name": "贵州省",
       "pid": 0,
-      "created_at": "2018-11-19 04:08:36",
-      "updated_at": "2018-11-19 04:08:36"
+      "created_at": "2018-11-19 05:45:20",
+      "updated_at": "2018-11-19 05:45:20"
     },
     "city": {
-      "id": 650,
-      "code": "230100",
-      "name": "哈尔滨市",
-      "pid": 649,
-      "created_at": "2018-11-19 04:08:36",
-      "updated_at": "2018-11-19 04:08:36"
+      "id": 2457,
+      "code": "520100",
+      "name": "贵阳市",
+      "pid": 2456,
+      "created_at": "2018-11-19 05:45:20",
+      "updated_at": "2018-11-19 05:45:20"
     },
     "area": {
-      "id": 651,
-      "code": "230102",
-      "name": "道里区",
-      "pid": 650,
-      "created_at": "2018-11-19 04:08:36",
-      "updated_at": "2018-11-19 04:08:36"
+      "id": 2458,
+      "code": "520102",
+      "name": "南明区",
+      "pid": 2457,
+      "created_at": "2018-11-19 05:45:20",
+      "updated_at": "2018-11-19 05:45:20"
     },
-    "created_at": "2018-11-19 04:08:39",
-    "updated_at": "2018-11-19 04:15:21"
+    "created_at": "2018-11-19 05:45:21",
+    "updated_at": "2018-11-19 05:45:22",
+    "school": {
+      "id": 46,
+      "school_name": "河南工业大学45",
+      "school_logo": "/img/a.jpg",
+      "favorite_number": 0,
+      "member_number": 0,
+      "created_at": "2018-11-19 05:45:21",
+      "updated_at": "2018-11-19 05:45:21"
+    }
   }
 }

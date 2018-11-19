@@ -98,7 +98,12 @@ class _UserInfoState extends State<UserInfo> {
                     new Expanded(
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: new Text('河南工业大学'),
+                        child: new Text(
+                          store.state.user.data['school']
+                                  .containsKey('school_name')
+                              ? store.state.user.data['school']['school_name']
+                              : '',
+                        ),
                       ),
                     )
                   ],
@@ -144,12 +149,19 @@ class _UserInfoState extends State<UserInfo> {
                     new Expanded(
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: new Text(store.state.user.data['province']
-                                ['name'] +
-                            '-' +
-                            store.state.user.data['city']['name'] +
-                            '-' +
-                            store.state.user.data['area']['name']),
+                        child: new Text(
+                          (store.state.user.data['province'].containsKey('name')
+                                  ? store.state.user.data['province']['name']
+                                  : "") +
+                              '-' +
+                              (store.state.user.data['city'].containsKey('name')
+                                  ? store.state.user.data['city']['name']
+                                  : '') +
+                              '-' +
+                              (store.state.user.data['area'].containsKey('name')
+                                  ? store.state.user.data['area']['name']
+                                  : ''),
+                        ),
                       ),
                     )
                   ],
