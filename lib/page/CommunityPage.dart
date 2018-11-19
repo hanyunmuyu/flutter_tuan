@@ -7,6 +7,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_tuan/service/CommunityListService.dart';
 import 'dart:convert';
 import 'package:flutter_tuan/service/UserService.dart';
+import 'package:flutter_tuan/page/CommunityDetailPage.dart';
 
 class CommunityPage extends StatefulWidget {
   @override
@@ -207,6 +208,9 @@ class _CommunityDetailState extends State<CommunityDetail> {
     return new GestureDetector(
       onTap: () {
         print(widget.data);
+        Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+          return new CommunityDetailPage();
+        }));
       },
       child: new Stack(
         alignment: Alignment.bottomCenter,
