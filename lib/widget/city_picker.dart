@@ -169,9 +169,15 @@ class _CityPickerState extends State<_CityPickerWidget> {
                         "name": province[provinceIndex]['sub'][cityIndex]['sub']
                             [areaIndex]['name']
                       };
-                      widget.selectProvince(provinceMap);
-                      widget.selectCity(cityMap);
-                      widget.selectArea(areaMap);
+                      if (widget.selectProvince != null) {
+                        widget.selectProvince(provinceMap);
+                      }
+                      if (widget.selectCity != null) {
+                        widget.selectCity(cityMap);
+                      }
+                      if (widget.selectArea != null) {
+                        widget.selectArea(areaMap);
+                      }
                       Navigator.pop(context);
                     },
                     child: new Text(
