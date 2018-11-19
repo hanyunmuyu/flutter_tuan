@@ -275,7 +275,6 @@ class _CommunityDetailState extends State<CommunityDetail> {
                               .then(
                             (v) {
                               Map res = json.decode(v);
-                              print(res);
                               if (res['code'] == 200) {
                                 setState(() {
                                   widget.data['member_number']++;
