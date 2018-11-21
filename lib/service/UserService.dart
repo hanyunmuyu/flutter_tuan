@@ -12,18 +12,6 @@ import 'package:flutter_tuan/common/redux/ThemeRedux.dart';
 class UserService extends BaseService {
   static String userKey = "userModel";
   static String themeKey = "themeData";
-
-  static login(BuildContext context, Map<String, dynamic> map) async {
-    String res = await HttpClient.post('/api/v1/login', map);
-    Storage.write(userKey, res);
-    Map user = json.decode(res);
-    UserModel userModel = UserModel.fromJson(user);
-    Navigator.of(context)
-      ..pop(true)
-      ..pushReplacementNamed('/home');
-    return userModel;
-  }
-
   static Future doLogin(Map<String, dynamic> map, Store store) async {
     String res = await HttpClient.post('/api/v1/login', map);
 
@@ -31,12 +19,6 @@ class UserService extends BaseService {
     Map user = json.decode(res);
     UserModel userModel = UserModel.fromJson(user);
     store.dispatch(UpdateUserAction(userModel));
-  }
-
-  static void goHome(BuildContext context) async {
-    Navigator.of(context)
-      ..pop(true)
-      ..pushReplacementNamed('/home');
   }
 
   static Future getUserInfo() async {
