@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'UserPage.dart';
 import 'MessagePage.dart';
 import 'ExplorePage.dart';
@@ -15,19 +16,59 @@ class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
   PageController pageController;
   int page = 1;
+  int count = 1;
+
+  _showDialog() {
+    showDialog<Null>(
+      context: context,
+      child: new AlertDialog(
+        content: new Text('你确定要离开么'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
+            },
+            child: new Text('取消'),
+          ),
+          new FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              } else {
+                SystemNavigator.pop();
+              }
+            },
+            child: new Text('确定'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<bool> _requestPop() {
+    _showDialog();
+    return new Future.value(false);
+  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: new PageView(
-        children: <Widget>[
-          new MessagePage(),
-          new SchoolPage(),
-          new ExplorePage(),
-          new UserPage(),
-        ],
-        controller: pageController,
-        onPageChanged: onPageChanged,
+      body: WillPopScope(
+        child: new PageView(
+          children: <Widget>[
+            new MessagePage(),
+            new SchoolPage(),
+            new ExplorePage(),
+            new UserPage(),
+          ],
+          controller: pageController,
+          onPageChanged: onPageChanged,
+        ),
+        onWillPop: _requestPop,
       ),
       bottomNavigationBar: new BottomNavigationBar(
         items: [
