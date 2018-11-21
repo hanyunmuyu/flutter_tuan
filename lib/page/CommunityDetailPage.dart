@@ -25,44 +25,81 @@ class _CommunityDetailPageState extends State<CommunityDetailPage> {
 
   Future<Null> _initData(Store store) async {}
 
+  List _data = List.generate(100, (i) => i);
+
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, Store>(
       builder: (context, store) {
         return new Scaffold(
-          body: RefreshIndicator(
-            child: new CustomScrollView(
-              controller: _controller,
-              slivers: <Widget>[
-                new SliverAppBar(
-                  iconTheme: Theme.of(context).iconTheme,
-                  title: new Text('111'),
-                  textTheme: Theme.of(context).primaryTextTheme,
-                  centerTitle: true,
-                  expandedHeight: 300.0,
-                  flexibleSpace: new Container(
-                    child: new Column(
-                      children: <Widget>[
-                        new Expanded(
-                          flex: 1,
-                          child: new Container(
-                            decoration: new BoxDecoration(
-                              image: new DecorationImage(
-                                image: new CachedNetworkImageProvider(
-                                  store.state.user.data['bg'],
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+          body: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverOverlapAbsorber(
+                  handle:
+                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  child: SliverAppBar(
+                    title: const Text('社团啊啊啊'),
+                    pinned: true,
+                    centerTitle: true,
+                    expandedHeight: 180.0,
+                    forceElevated: innerBoxIsScrolled,
+                    flexibleSpace: Container(
+                      decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                          image: new CachedNetworkImageProvider(
+                            'http://192.168.1.66:88/img/b.jpg',
                           ),
+                          fit: BoxFit.cover,
                         ),
-                      ],
+                      ),
+                      child: new Text(
+                        '111111111111111',
+                        style: new TextStyle(color: Colors.red),
+                      ),
+                      alignment: Alignment.bottomCenter,
+                    ),
+                    bottom: PreferredSize(
+                      child: new Text('111'),
+                      preferredSize: new Size(double.infinity, 60.0),
                     ),
                   ),
                 ),
-              ],
+              ];
+            },
+            body: new SafeArea(
+              top: true,
+              bottom: true,
+              child: Builder(
+                builder: (BuildContext context) {
+                  return new CustomScrollView(
+                    slivers: <Widget>[
+                      new SliverOverlapInjector(
+                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                            context),
+                      ),
+                      SliverGrid(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) => Container(
+                                child: new CachedNetworkImage(
+                                  imageUrl: 'http://192.168.1.66:88/img/b.jpg',
+                                ),
+                                alignment: Alignment.center,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 1.0),
+                              ),
+                          childCount: _data.length,
+                        ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                      )
+                    ],
+                  );
+                },
+              ),
             ),
-            onRefresh: () => _initData(store),
           ),
         );
       },
