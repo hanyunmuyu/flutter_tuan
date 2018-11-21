@@ -7,11 +7,8 @@ part of 'CommunityListModel.dart';
 // **************************************************************************
 
 CommunityListModel _$CommunityListModelFromJson(Map<String, dynamic> json) {
-  return CommunityListModel(
-      json['code'] as int, json['status'] as String, json['msg'] as String,
-      data: (json['data'] as List)
-          .map((e) => CommunityDetail.fromJson(e as Map<String, dynamic>))
-          .toList());
+  return CommunityListModel(json['code'] as int, json['status'] as String,
+      json['msg'] as String, json['data'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$CommunityListModelToJson(CommunityListModel instance) =>

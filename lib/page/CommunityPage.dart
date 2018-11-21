@@ -20,6 +20,7 @@ class _CommunityPageState extends State<CommunityPage>
     with AutomaticKeepAliveClientMixin {
   int page = 1;
   bool isLoading = false;
+  bool isMounted = false;
   int currentPage = 1;
   int totalPage = 1;
   Store<AppState> store;
@@ -36,6 +37,21 @@ class _CommunityPageState extends State<CommunityPage>
     _scrollController.addListener(_scrollControllerLoadData);
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!isMounted) {
+      isMounted = true;
+      Store<AppState> store = StoreProvider.of<AppState>(context);
+      _initData(store);
+      if (mounted) {
+        setState(() {
+          this.store = store;
+        });
+      }
+    }
+  }
+
   Future<Null> _scrollControllerLoadData() async {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
@@ -48,26 +64,17 @@ class _CommunityPageState extends State<CommunityPage>
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    Store<AppState> store = StoreProvider.of<AppState>(context);
-    _initData(store);
-  }
-
   Future _loadData(Store store) async {
     isLoading = true;
-    CommunityListService.getCommunityList(store, page).then((v) {
+    CommunityListService.getCommunityList(store, context, page).then((v) {
       if (v != null) {
-        Map map = json.decode(v);
-        List.from(map['data']['userCommunityList']).forEach((c) {
+        List.from(v.data['userCommunityList']).forEach((c) {
           userCommunityList.add(c);
         });
-        List.from(map['data']['communityList']['data']).forEach((c) {
+        List.from(v.data['communityList']['data']).forEach((c) {
           communityList.add(c);
         });
-        totalPage = map['data']['communityList']['totalPage'];
+        totalPage = v.data['communityList']['totalPage'];
         currentPage++;
       }
       if (mounted) {
@@ -106,7 +113,6 @@ class _CommunityPageState extends State<CommunityPage>
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, Store>(
       builder: (context, store) {
-        this.store = store;
         return new Scaffold(
           body: RefreshIndicator(
             child: new CustomScrollView(

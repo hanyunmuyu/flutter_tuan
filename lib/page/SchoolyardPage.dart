@@ -60,15 +60,14 @@ class _SchoolyardPageState extends State<SchoolyardPage>
 
   void _loadData() async {
     if (totalPage >= currentPage) {
-      SchoolService.getSchoolList(currentPage).then((v) {
+      SchoolService.getSchoolList(context, currentPage).then((v) {
         isLoading = false;
         if (v != null) {
-          Map map = json.decode(v);
-          List.from(map['data']['schoolRecommend']).forEach((v) {
+          List.from(v.data['schoolRecommend']).forEach((v) {
             recommendList.add(v);
           });
-          totalPage = map['data']['schoolList']['totalPage'];
-          List.from(map['data']['schoolList']['data']).forEach((v) {
+          totalPage = v.data['schoolList']['totalPage'];
+          List.from(v.data['schoolList']['data']).forEach((v) {
             schoolList.add(v);
           });
           currentPage++;

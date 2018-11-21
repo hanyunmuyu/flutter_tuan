@@ -7,11 +7,8 @@ part of 'SchoolListModel.dart';
 // **************************************************************************
 
 SchoolListModel _$SchoolListModelFromJson(Map<String, dynamic> json) {
-  return SchoolListModel(
-      json['code'] as int, json['status'] as String, json['msg'] as String,
-      data: (json['data'] as List)
-          .map((e) => SchoolDetail.fromJson(e as Map<String, dynamic>))
-          .toList());
+  return SchoolListModel(json['code'] as int, json['status'] as String,
+      json['msg'] as String, json['data'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$SchoolListModelToJson(SchoolListModel instance) =>

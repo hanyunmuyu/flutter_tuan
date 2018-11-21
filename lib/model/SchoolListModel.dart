@@ -1,17 +1,17 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter_tuan/model/BaseModel.dart';
 
 part 'SchoolListModel.g.dart';
 
 @JsonSerializable()
-class SchoolListModel {
+class SchoolListModel extends BaseModel {
   final int code;
   final String status;
   final String msg;
   @JsonKey(nullable: false)
-  List<SchoolDetail> data;
+  final Map<String, dynamic> data;
 
-  SchoolListModel(this.code, this.status, this.msg, {List<SchoolDetail> data})
-      : data = data ?? <SchoolDetail>[];
+  SchoolListModel(this.code, this.status, this.msg, this.data);
 
   factory SchoolListModel.fromJson(Map<String, dynamic> json) =>
       _$SchoolListModelFromJson(json);

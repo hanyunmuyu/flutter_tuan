@@ -1,9 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter_tuan/model/BaseModel.dart';
 
 part 'UserModel.g.dart';
 
 @JsonSerializable()
-class UserModel {
+class UserModel extends BaseModel {
   final int code;
   final String status;
   final String msg;
