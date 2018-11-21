@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tuan/common/redux/AppState.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class CommunityDetailPage extends StatefulWidget {
+  final Map<String, dynamic> data;
+
+  CommunityDetailPage(this.data);
+
   @override
   State createState() {
     return new _CommunityDetailPageState();
@@ -14,13 +17,14 @@ class CommunityDetailPage extends StatefulWidget {
 
 class _CommunityDetailPageState extends State<CommunityDetailPage> {
   Store<AppState> store;
-  ScrollController _controller = new ScrollController();
+  bool isMounted = false;
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    store = StoreProvider.of<AppState>(context);
+    if (!isMounted) {
+      store = StoreProvider.of<AppState>(context);
+    }
   }
 
   Future<Null> _initData(Store store) async {}
@@ -40,30 +44,52 @@ class _CommunityDetailPageState extends State<CommunityDetailPage> {
                   handle:
                       NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                   child: SliverAppBar(
-                    title: const Text('社团啊啊啊'),
+                    title: new Text(widget.data['community_name'].toString()),
+                    textTheme: Theme.of(context).textTheme,
+                    iconTheme: Theme.of(context).iconTheme,
                     pinned: true,
                     centerTitle: true,
+                    backgroundColor: Colors.white,
                     expandedHeight: 180.0,
                     forceElevated: innerBoxIsScrolled,
                     flexibleSpace: Container(
-                      decoration: new BoxDecoration(
-                        image: new DecorationImage(
-                          image: new CachedNetworkImageProvider(
-                            'http://192.168.1.66:88/img/b.jpg',
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                      height: 260.0,
                       child: new Text(
-                        '111111111111111',
+                        '22222222',
                         style: new TextStyle(color: Colors.red),
                       ),
-                      alignment: Alignment.bottomCenter,
                     ),
                     bottom: PreferredSize(
-                      child: new Text('111'),
-                      preferredSize: new Size(double.infinity, 60.0),
+                      child: new Row(
+                        children: <Widget>[
+                          new Expanded(
+                            child: FlatButton(
+                              onPressed: () {},
+                              child: new Text('关注'),
+                              textColor: Colors.white,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          new Divider(
+                            indent: 4,
+                          ),
+                          new Expanded(
+                            child: OutlineButton(
+                              onPressed: () {},
+                              child: new Text('加入'),
+                              textColor: Theme.of(context).primaryColor,
+                              borderSide: new BorderSide(
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                          ),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ),
+                      preferredSize: new Size(double.infinity, 80.0),
                     ),
+                    actions: <Widget>[
+                      IconButton(icon: Icon(Icons.search), onPressed: () {})
+                    ],
                   ),
                 ),
               ];

@@ -213,9 +213,8 @@ class _CommunityDetailState extends State<CommunityDetail> {
   Widget build(BuildContext context) {
     return new GestureDetector(
       onTap: () {
-        print(widget.data);
         Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
-          return new CommunityDetailPage();
+          return new CommunityDetailPage(widget.data);
         }));
       },
       child: new Stack(
