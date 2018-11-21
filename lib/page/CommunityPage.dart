@@ -254,18 +254,16 @@ class _CommunityDetailState extends State<CommunityDetail> {
                       FlatButton.icon(
                         onPressed: () {
                           UserService.payAttentionToCommunity(
-                                  widget.store, widget.data['id'])
+                                  context, widget.store, widget.data['id'])
                               .then(
                             (v) {
-                              Map res = json.decode(v);
-                              print(res);
-                              if (res['code'] == 200) {
+                              if (v.code == 200) {
                                 setState(() {
                                   widget.data['favorite_number']++;
                                 });
                               }
                               Widget snackBar = new SnackBar(
-                                content: new Text(res['msg']),
+                                content: new Text(v.msg),
                               );
                               Scaffold.of(context).showSnackBar(snackBar);
                             },
@@ -281,17 +279,16 @@ class _CommunityDetailState extends State<CommunityDetail> {
                       FlatButton.icon(
                         onPressed: () {
                           UserService.joinInCommunity(
-                                  widget.store, widget.data['id'])
+                                  context, widget.store, widget.data['id'])
                               .then(
                             (v) {
-                              Map res = json.decode(v);
-                              if (res['code'] == 200) {
+                              if (v.code == 200) {
                                 setState(() {
                                   widget.data['member_number']++;
                                 });
                               }
                               Widget snackBar = new SnackBar(
-                                content: new Text(res['msg']),
+                                content: new Text(v.msg),
                               );
                               Scaffold.of(context).showSnackBar(snackBar);
                             },

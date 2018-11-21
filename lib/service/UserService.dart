@@ -8,10 +8,12 @@ import 'package:redux/redux.dart';
 import 'package:flutter_tuan/common/redux/UserRedux.dart';
 import 'package:flutter_tuan/model/ThemeModel.dart';
 import 'package:flutter_tuan/common/redux/ThemeRedux.dart';
+import 'package:flutter_tuan/model/BaseDataModel.dart';
 
 class UserService extends BaseService {
   static String userKey = "userModel";
   static String themeKey = "themeData";
+
   static Future doLogin(Map<String, dynamic> map, Store store) async {
     String res = await HttpClient.post('/api/v1/login', map);
 
@@ -59,21 +61,35 @@ class UserService extends BaseService {
     return Storage.read(themeKey);
   }
 
-  static Future payAttentionToCommunity(Store store, int communityId) async {
+  static Future<BaseDataModel> payAttentionToCommunity(
+      BuildContext context, Store store, int communityId) async {
     String token;
     if (store.state.user != null) {
       token = store.state.user.data['api_token'];
     }
-    return HttpClient.post(
+    String jsonStr = await HttpClient.post(
         '/api/v1/community/attention', {"id": communityId, "api_token": token});
+    Map map = json.decode(jsonStr);
+    BaseDataModel baseDataModel = BaseDataModel.fromJson(map);
+    if (BaseService.checkToken(context, baseDataModel)) {
+      return baseDataModel;
+    }
+    return baseDataModel;
   }
 
-  static Future joinInCommunity(Store store, int communityId) async {
+  static Future<BaseDataModel> joinInCommunity(
+      BuildContext context, Store store, int communityId) async {
     String token;
     if (store.state.user != null) {
       token = store.state.user.data['api_token'];
     }
-    return HttpClient.post(
+    String jsonStr = await HttpClient.post(
         '/api/v1/community/join', {"id": communityId, "api_token": token});
+    Map map = json.decode(jsonStr);
+    BaseDataModel baseDataModel = BaseDataModel.fromJson(map);
+    if (BaseService.checkToken(context, baseDataModel)) {
+      return baseDataModel;
+    }
+    return baseDataModel;
   }
 }
