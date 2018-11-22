@@ -3,6 +3,7 @@ import 'package:flutter_tuan/common/redux/AppState.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_tuan/page/CommunityActivePage.dart';
 
 class CommunityDetailPage extends StatefulWidget {
   final Map<String, dynamic> data;
@@ -15,9 +16,11 @@ class CommunityDetailPage extends StatefulWidget {
   }
 }
 
-class _CommunityDetailPageState extends State<CommunityDetailPage> {
+class _CommunityDetailPageState extends State<CommunityDetailPage>
+    with TickerProviderStateMixin {
   Store<AppState> store;
   bool isMounted = false;
+  int defaultIndex = 1;
 
   @override
   void didChangeDependencies() {
@@ -27,105 +30,133 @@ class _CommunityDetailPageState extends State<CommunityDetailPage> {
     }
   }
 
-  Future<Null> _initData(Store store) async {}
+  TabController _tabController;
+  final List<Tab> myTabs = <Tab>[
+    new Tab(
+      text: '最新动态',
+    ),
+    new Tab(
+      text: '热门动态',
+    ),
+    new Tab(
+      text: '历史活动',
+    ),
+    new Tab(
+      text: '成员',
+    ),
+  ];
 
-  List _data = List.generate(100, (i) => i);
+  @override
+  void initState() {
+    super.initState();
+    _tabController =
+        new TabController(length: myTabs.length, initialIndex: 1, vsync: this)
+          ..addListener(() {
+            setState(() {
+              defaultIndex = _tabController.index;
+            });
+          });
+  }
 
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, Store>(
       builder: (context, store) {
         return new Scaffold(
-          body: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverOverlapAbsorber(
-                  handle:
-                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                  child: SliverAppBar(
-                    title: new Text(widget.data['community_name'].toString()),
-                    textTheme: Theme.of(context).textTheme,
-                    iconTheme: Theme.of(context).iconTheme,
-                    pinned: true,
-                    centerTitle: true,
-                    backgroundColor: Colors.white,
-                    expandedHeight: 180.0,
-                    forceElevated: innerBoxIsScrolled,
-                    flexibleSpace: Container(
-                      height: 260.0,
-                      child: new Text(
-                        '22222222',
-                        style: new TextStyle(color: Colors.red),
-                      ),
-                    ),
-                    bottom: PreferredSize(
-                      child: new Row(
+          appBar: new AppBar(
+            title: new Text(widget.data['community_name'].toString()),
+            centerTitle: true,
+          ),
+          body: CustomScrollView(
+            slivers: <Widget>[
+              new SliverToBoxAdapter(
+                child: new Container(
+                  child: Column(
+                    children: <Widget>[
+                      new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           new Expanded(
-                            child: FlatButton(
-                              onPressed: () {},
-                              child: new Text('关注'),
-                              textColor: Colors.white,
-                              color: Theme.of(context).primaryColor,
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  widget.data['community_logo'].toString(),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          new Divider(
-                            indent: 4,
+                          Expanded(
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  new Text('111'),
+                                  new Text('111'),
+                                  new Text('111'),
+                                  new Text('111'),
+                                ],
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
+                              margin: const EdgeInsets.only(left: 4.0),
+                            ),
+                            flex: 2,
                           ),
-                          new Expanded(
+                        ],
+                      ),
+                      new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
                             child: OutlineButton(
                               onPressed: () {},
-                              child: new Text('加入'),
-                              textColor: Theme.of(context).primaryColor,
+                              child: new Text('已经关注 | 1024'),
                               borderSide: new BorderSide(
-                                  color: Theme.of(context).primaryColor),
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            indent: 2,
+                          ),
+                          Expanded(
+                            child: FlatButton(
+                              onPressed: () {},
+                              child: new Text('加入'),
+                              color: Theme.of(context).primaryColor,
+                              textColor: Colors.white,
                             ),
                           ),
                         ],
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      ),
-                      preferredSize: new Size(double.infinity, 80.0),
-                    ),
-                    actions: <Widget>[
-                      IconButton(icon: Icon(Icons.search), onPressed: () {})
-                    ],
-                  ),
-                ),
-              ];
-            },
-            body: new SafeArea(
-              top: true,
-              bottom: true,
-              child: Builder(
-                builder: (BuildContext context) {
-                  return new CustomScrollView(
-                    slivers: <Widget>[
-                      new SliverOverlapInjector(
-                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context),
-                      ),
-                      SliverGrid(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) => Container(
-                                child: new CachedNetworkImage(
-                                  imageUrl: 'http://192.168.1.66:88/img/b.jpg',
-                                ),
-                                alignment: Alignment.center,
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 1.0),
-                              ),
-                          childCount: _data.length,
-                        ),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
                       )
                     ],
-                  );
-                },
+                  ),
+                  margin: const EdgeInsets.all(2.0),
+                ),
               ),
-            ),
+              new SliverToBoxAdapter(
+                child: Align(
+                  child: TabBar(
+                    key: Key(widget.data.toString()),
+                    tabs: myTabs,
+                    controller: _tabController,
+                    isScrollable: true,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    labelColor: Theme.of(context).primaryColor,
+                    labelStyle: new TextStyle(fontSize: 16.0),
+                    unselectedLabelStyle: new TextStyle(fontSize: 12.0),
+                  ),
+                  alignment: Alignment.center,
+                ),
+              ),
+              new SliverFixedExtentList(
+                delegate: new SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return ListTile(
+                      title: new Text('$index'),
+                    );
+                  },
+                  childCount: 20 + defaultIndex,
+                ),
+                itemExtent: 60,
+              ),
+            ],
           ),
         );
       },
