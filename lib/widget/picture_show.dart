@@ -115,21 +115,53 @@ class _PictureWidgetState extends State<_PictureWidget> {
       color: Colors.transparent,
       child: new Container(
         width: double.infinity,
-        child: GestureDetector(
-            child: CachedNetworkImage(
-              imageUrl: widget.picList[index],
+        child: Stack(
+          children: <Widget>[
+            GestureDetector(
+              child: Center(
+                child: CachedNetworkImage(
+                  imageUrl: widget.picList[index],
+                  fit: BoxFit.cover,
+                ),
+              ),
+              onHorizontalDragDown: (detail) {
+                startX = detail.globalPosition.dx.toInt();
+              },
+              onHorizontalDragUpdate: (detail) {
+                endX = detail.globalPosition.dx.toInt();
+              },
+              onHorizontalDragEnd: (detail) {
+                _getIndex(endX - startX);
+                setState(() {});
+              },
+              onHorizontalDragCancel: () {},
             ),
-            onHorizontalDragDown: (detail) {
-              startX = detail.globalPosition.dx.toInt();
-            },
-            onHorizontalDragUpdate: (detail) {
-              endX = detail.globalPosition.dx.toInt();
-            },
-            onHorizontalDragEnd: (detail) {
-              _getIndex(endX - startX);
-              setState(() {});
-            },
-            onHorizontalDragCancel: () {}),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(
+                  widget.picList.length,
+                  (i) => GestureDetector(
+                        child: CircleAvatar(
+                          foregroundColor: Theme.of(context).primaryColor,
+                          radius: 8.0,
+                          backgroundColor: index == i
+                              ? Theme.of(context).primaryColor
+                              : Colors.white,
+                        ),
+                        onTap: () {
+                          setState(() {
+                            startX = endX = 0;
+                            index = i;
+                          });
+                        },
+                      ),
+                ).toList(),
+              ),
+            )
+          ],
+        ),
         alignment: Alignment.center,
       ),
     );
@@ -147,6 +179,5 @@ class _PictureWidgetState extends State<_PictureWidget> {
         index = index.clamp(0, widget.picList.length - 1);
       });
     }
-    print(index);
   }
 }
