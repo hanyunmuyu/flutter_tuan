@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class PictureShow extends StatelessWidget {
-  String img = 'http://pic1.win4000.com/wallpaper/2018-01-13/5a59bb362eb18.jpg';
   final List<String> picList;
 
   PictureShow({this.picList});
