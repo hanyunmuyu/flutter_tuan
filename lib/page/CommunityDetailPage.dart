@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_tuan/page/CommunityActivePage.dart';
 import 'package:flutter_tuan/page/CommunityMember.dart';
+import 'package:flutter_tuan/service/CommunityDetailService.dart';
 
 class CommunityDetailPage extends StatefulWidget {
   final Map<String, dynamic> data;
@@ -23,11 +24,14 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
   bool isMounted = false;
   int defaultIndex = 1;
 
+  Map<String, dynamic> communityDetail = new Map();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!isMounted) {
       store = StoreProvider.of<AppState>(context);
+      _init(store);
     }
   }
 
@@ -54,6 +58,17 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
       length: myTabs.length,
       initialIndex: 1,
       vsync: this,
+    );
+  }
+
+  void _init(Store store) async {
+    print(widget.data['id']);
+    CommunityDetailService.getCommunityDetail(store, context, widget.data['id'])
+        .then(
+      (v) {
+        communityDetail = v.data;
+        setState(() {});
+      },
     );
   }
 
@@ -85,13 +100,14 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
                           child: Container(
                             child: Column(
                               children: <Widget>[
-                                new Text('成员：100 关注：1000'),
                                 new Text('分类：体育、交友'),
                                 new Row(
                                   children: <Widget>[
                                     new Text('院校:'),
                                     FlatButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        print(communityDetail['school_id']);
+                                      },
                                       child: new Text('河南工业大学'),
                                     )
                                   ],
@@ -111,7 +127,11 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
                         Expanded(
                           child: OutlineButton(
                             onPressed: () {},
-                            child: new Text('已经关注 | 1024'),
+                            child: communityDetail['isAttention'] == true
+                                ? new Text(
+                                    '已经关注 | ${communityDetail['favorite_number']}',
+                                  )
+                                : new Text('关注'),
                             borderSide: new BorderSide(
                               color: Theme.of(context).primaryColor,
                             ),
@@ -156,10 +176,10 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
                 width: double.infinity,
                 child: TabBarView(
                   children: <Widget>[
-                    CommunityActivePage(),
-                    CommunityActivePage(),
-                    CommunityActivePage(),
-                    CommunityMember(),
+                    CommunityActivePage(widget.data['id']),
+                    CommunityActivePage(widget.data['id']),
+                    CommunityActivePage(widget.data['id']),
+                    CommunityMember(widget.data['id']),
                   ],
                   controller: _tabController,
                 ),
