@@ -10,20 +10,20 @@ class CommunityMember extends StatelessWidget {
   CommunityMember(this.id);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.center,
-      child: PictureShow(
-        picList: [
-          img,
-          img1,
-          img,
-          img1,
-          img1,
-          img,
-          img1
-        ],
+  build(BuildContext context) {
+    return SafeArea(
+      child: Builder(
+        builder: (BuildContext context) {
+          return CustomScrollView(
+            key: Key('111'),
+            slivers: <Widget>[
+              new SliverOverlapInjector(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

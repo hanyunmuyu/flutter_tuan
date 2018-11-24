@@ -72,120 +72,66 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
     );
   }
 
+  ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, Store>(
       builder: (context, store) {
         return new Scaffold(
-          appBar: new AppBar(
-            title: new Text(widget.data['community_name'].toString()),
-            centerTitle: true,
-            actions: <Widget>[],
-          ),
-          body: Stack(
-            children: <Widget>[
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        new Expanded(
-                          child: CachedNetworkImage(
-                            imageUrl: widget.data['community_logo'].toString(),
-                            fit: BoxFit.cover,
+          body: NestedScrollView(
+            controller: _controller,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                new SliverOverlapAbsorber(
+                  handle:
+                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  child: new SliverAppBar(
+                    pinned: true,
+                    expandedHeight: 300.0,
+                    // 这个高度必须比flexibleSpace高度大
+                    title: new Text(widget.data['community_name'].toString()),
+                    centerTitle: true,
+                    forceElevated: innerBoxIsScrolled,
+                    bottom: PreferredSize(
+                        child: new Container(
+                          child: TabBar(
+                            controller: _tabController,
+                            tabs: myTabs,
+                            isScrollable: true,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            labelColor: Colors.white,
+                            labelStyle: new TextStyle(fontSize: 16.0),
+                            unselectedLabelStyle: new TextStyle(fontSize: 12.0),
                           ),
                         ),
-                        Expanded(
-                          child: Container(
-                            child: Column(
-                              children: <Widget>[
-                                new Text('分类：体育、交友'),
-                                new Row(
-                                  children: <Widget>[
-                                    new Text('院校:'),
-                                    FlatButton(
-                                      onPressed: () {
-                                        print(communityDetail['school_id']);
-                                      },
-                                      child: new Text('河南工业大学'),
-                                    )
-                                  ],
-                                ),
-                              ],
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                            ),
-                            margin: const EdgeInsets.only(left: 8.0),
-                          ),
-                          flex: 2,
+                        preferredSize: new Size(double.infinity, 46.0)),
+                    // 46.0为TabBar的高度，也就是tabs.dart中的_kTabHeight值，因为flutter不支持反射所以暂时没法通过代码获取
+                    flexibleSpace: new Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'http://pic1.win4000.com/wallpaper/2018-08-30/5b878eec0d4cf.jpg'),
+                          fit: BoxFit.cover,
                         ),
-                      ],
+                      ),
+                      margin: const EdgeInsets.only(bottom: 46.0),
                     ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: OutlineButton(
-                            onPressed: () {},
-                            child: communityDetail['isAttention'] == true
-                                ? new Text(
-                                    '已经关注 | ${communityDetail['favorite_number']}',
-                                  )
-                                : new Text('关注'),
-                            borderSide: new BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          indent: 2,
-                        ),
-                        Expanded(
-                          child: FlatButton(
-                            onPressed: () {},
-                            child: new Text('加入'),
-                            color: Theme.of(context).primaryColor,
-                            textColor: Colors.white,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+                  ),
                 ),
-                margin: const EdgeInsets.all(2.0),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 130.0),
-                child: Row(
-                  children: <Widget>[
-                    TabBar(
-                      tabs: myTabs,
-                      controller: _tabController,
-                      isScrollable: true,
-                      labelColor: Theme.of(context).primaryColor,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      labelStyle: new TextStyle(fontSize: 16.0),
-                      unselectedLabelStyle: new TextStyle(fontSize: 12.0),
-                    )
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(top: 200.0),
-                width: double.infinity,
-                child: TabBarView(
-                  children: <Widget>[
-                    CommunityActivePage(widget.data['id']),
-                    CommunityActivePage(widget.data['id']),
-                    CommunityActivePage(widget.data['id']),
-                    CommunityMember(widget.data['id']),
-                  ],
-                  controller: _tabController,
-                ),
-                alignment: Alignment.center,
-              ),
-            ],
+              ];
+            },
+            body: TabBarView(
+              key: ObjectKey('SchoolPage111'),
+              controller: _tabController,
+              children: <Widget>[
+                CommunityActivePage(widget.data['id'], _controller),
+                CommunityActivePage(widget.data['id'], _controller),
+                CommunityActivePage(widget.data['id'], _controller),
+                CommunityMember(widget.data['id']),
+              ],
+            ),
           ),
         );
       },
