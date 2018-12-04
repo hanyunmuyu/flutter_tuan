@@ -74,7 +74,7 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
     print(widget.data['id']);
     CommunityDetailService.getCommunityDetail(store, context, widget.data['id'])
         .then(
-          (v) {
+      (v) {
         communityDetail = v.data;
         setState(() {});
       },
@@ -87,15 +87,11 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 24.0),
-            child: Icon(icon, color: Theme
-                .of(context)
-                .primaryColor),
+            child: Icon(icon, color: Theme.of(context).primaryColor),
           ),
           Text(
             label,
-            style: TextStyle(color: Theme
-                .of(context)
-                .primaryColor),
+            style: TextStyle(color: Theme.of(context).primaryColor),
           ),
         ],
       ),
@@ -129,13 +125,12 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
               IconButton(icon: Icon(Icons.search), onPressed: () {}),
               PopupMenuButton<String>(
                 onSelected: (String item) {},
-                itemBuilder: (BuildContext context) =>
-                <PopupMenuItem<String>>[
-                  _buildMenuItem(Icons.share, '分享'),
-                  _buildMenuItem(Icons.favorite_border, '关注'),
-                  _buildMenuItem(Icons.email, '留言'),
-                  _buildMenuItem(Icons.not_interested, '举报'),
-                ],
+                itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+                      _buildMenuItem(Icons.share, '分享'),
+                      _buildMenuItem(Icons.favorite_border, '关注'),
+                      _buildMenuItem(Icons.email, '留言'),
+                      _buildMenuItem(Icons.not_interested, '举报'),
+                    ],
                 icon: Icon(Icons.more_vert),
               ),
             ],
@@ -154,17 +149,21 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
                         showDialog<Null>(
                           context: context,
                           barrierDismissible: false,
-                          builder: (BuildContext c) =>
-                              Material(
+                          builder: (BuildContext c) => Material(
                                 type: MaterialType.transparency,
                                 child: Center(
                                   child: Container(
                                     child: SizedBox(
                                       child: CircularProgressIndicator(),
+                                      width: 10.0,
+                                      height: 10.0,
                                     ),
-                                    color: Colors.white,
-                                    width: 100.0,
-                                    height: 100.0,
+                                    width: 120.0,
+                                    height: 120.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
                                   ),
                                 ),
                               ),
