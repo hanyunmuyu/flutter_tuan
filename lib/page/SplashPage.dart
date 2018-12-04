@@ -46,7 +46,7 @@ class _SplashState extends State<SplashPage> {
 
   void _timer() async {
     t = new Timer(const Duration(seconds: 1), () {
-      if (time <= 0) {
+      if (time <= 1) {
         t.cancel();
         _go();
       } else {
@@ -67,30 +67,32 @@ class _SplashState extends State<SplashPage> {
             width: double.infinity,
             height: double.infinity,
             color: Colors.white,
-            child: new Stack(children: <Widget>[
-              new Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: new RaisedButton(
+            child: new Stack(
+              children: <Widget>[
+                SizedBox.expand(
+                  child: Image(
+                    image: new CachedNetworkImageProvider(img),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Positioned(
+                  child: FlatButton(
                     onPressed: () {
                       t.cancel();
                       _go();
                     },
                     child: new Text(
-                      "$time",
+                      "$time秒",
                       textScaleFactor: 1.5,
                     ),
+                    color: Colors.black12,
+                    textColor: Colors.black,
                   ),
+                  top: MediaQuery.of(context).padding.top,
+                  right: 8.0,
                 ),
-              ),
-              new Center(
-                child: new Image(
-                  image: new CachedNetworkImageProvider(img),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ]),
+              ],
+            ),
           );
         },
         converter: (store) => store,
