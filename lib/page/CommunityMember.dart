@@ -1,25 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tuan/widget/picture_show.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CommunityMember extends StatelessWidget {
   final int id;
-  String img = 'http://pic1.win4000.com/wallpaper/2018-01-13/5a59bb362eb18.jpg';
-  String img1 =
-      'http://pic1.win4000.com/wallpaper/2018-08-30/5b878eec0d4cf.jpg';
 
   CommunityMember(this.id);
 
   @override
   build(BuildContext context) {
     return SafeArea(
+      top: false,
+      bottom: false,
       child: Builder(
         builder: (BuildContext context) {
           return CustomScrollView(
             key: Key('111'),
             slivers: <Widget>[
-              new SliverOverlapInjector(
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+              SliverPadding(
+                padding: const EdgeInsets.all(6.0),
+                sliver: SliverToBoxAdapter(
+                  child: Text('管理员(5)'),
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                sliver: SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return Column(
+                        children: <Widget>[
+                          CircleAvatar(
+                            backgroundImage: CachedNetworkImageProvider(
+                              'http://old.bz55.com/uploads/allimg/150422/139-1504221GZ3.jpg',
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 2.0),
+                            child: Text('寒云'),
+                          ),
+                        ],
+                      );
+                    },
+                    childCount: 6,
+                  ),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.all(6.0),
+                sliver: SliverToBoxAdapter(
+                  child: Text('关注的人(5)'),
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                sliver: SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return Column(
+                        children: <Widget>[
+                          CircleAvatar(
+                            backgroundImage: CachedNetworkImageProvider(
+                              'http://old.bz55.com/uploads/allimg/150422/139-1504221GZ3.jpg',
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 2.0),
+                            child: Text('寒云'),
+                          ),
+                        ],
+                      );
+                    },
+                    childCount: 66,
+                  ),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                  ),
+                ),
               ),
             ],
           );
