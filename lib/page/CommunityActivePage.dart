@@ -31,20 +31,29 @@ class CommunityActivePage extends StatelessWidget {
                 Text('寒云'),
                 Row(
                   children: <Widget>[
-                    Icon(Icons.favorite_border),
+                    Icon(
+                      Icons.favorite_border,
+                      size: 18,
+                    ),
                     Text('100'),
                   ],
                 ),
                 Row(
                   children: <Widget>[
-                    Icon(Icons.chat),
+                    Icon(
+                      Icons.chat,
+                      size: 18,
+                    ),
                     Text('100'),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Icon(Icons.visibility),
+                    Icon(
+                      Icons.visibility,
+                      size: 18,
+                    ),
                     Text('l11'),
                   ],
                 ),
