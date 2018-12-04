@@ -74,7 +74,7 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
     print(widget.data['id']);
     CommunityDetailService.getCommunityDetail(store, context, widget.data['id'])
         .then(
-      (v) {
+          (v) {
         communityDetail = v.data;
         setState(() {});
       },
@@ -87,11 +87,15 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 24.0),
-            child: Icon(icon, color: Theme.of(context).primaryColor),
+            child: Icon(icon, color: Theme
+                .of(context)
+                .primaryColor),
           ),
           Text(
             label,
-            style: TextStyle(color: Theme.of(context).primaryColor),
+            style: TextStyle(color: Theme
+                .of(context)
+                .primaryColor),
           ),
         ],
       ),
@@ -125,12 +129,13 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
               IconButton(icon: Icon(Icons.search), onPressed: () {}),
               PopupMenuButton<String>(
                 onSelected: (String item) {},
-                itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                      _buildMenuItem(Icons.share, '分享'),
-                      _buildMenuItem(Icons.favorite_border, '关注'),
-                      _buildMenuItem(Icons.email, '留言'),
-                      _buildMenuItem(Icons.not_interested, '举报'),
-                    ],
+                itemBuilder: (BuildContext context) =>
+                <PopupMenuItem<String>>[
+                  _buildMenuItem(Icons.share, '分享'),
+                  _buildMenuItem(Icons.favorite_border, '关注'),
+                  _buildMenuItem(Icons.email, '留言'),
+                  _buildMenuItem(Icons.not_interested, '举报'),
+                ],
                 icon: Icon(Icons.more_vert),
               ),
             ],
@@ -141,21 +146,30 @@ class _CommunityDetailPageState extends State<CommunityDetailPage>
                 controller: _tabController,
                 children: <Widget>[
                   Container(
-                    child: ListView.builder(
-                      itemBuilder: (BuildContext context, int index) =>
-                          ListTile(
-                            title: Text('$index'),
-                          ),
-                      itemCount: 20,
-                    ),
+                    child: CommunityActivePage(1, _controller),
                   ),
                   Container(
-                    child: ListView.builder(
-                      itemBuilder: (BuildContext context, int index) =>
-                          ListTile(
-                            title: Text('$index'),
-                          ),
-                      itemCount: 20,
+                    child: RaisedButton(
+                      onPressed: () {
+                        showDialog<Null>(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext c) =>
+                              Material(
+                                type: MaterialType.transparency,
+                                child: Center(
+                                  child: Container(
+                                    child: SizedBox(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    color: Colors.white,
+                                    width: 100.0,
+                                    height: 100.0,
+                                  ),
+                                ),
+                              ),
+                        );
+                      },
                     ),
                   ),
                   Container(
