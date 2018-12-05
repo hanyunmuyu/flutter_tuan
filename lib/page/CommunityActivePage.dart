@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CommunityActivePage extends StatelessWidget {
   final int id;
@@ -14,9 +15,19 @@ class CommunityActivePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              '我是一只小小鸟',
-              textScaleFactor: 1.3,
+            Row(
+              children: <Widget>[
+                CircleAvatar(
+                  radius: 10.0,
+                  backgroundImage: CachedNetworkImageProvider(
+                    'http://192.168.1.66:88/img/b.jpg',
+                  ),
+                ),
+                Text(
+                  '我是一只小小鸟',
+                  textScaleFactor: 1.3,
+                ),
+              ],
             ),
             Padding(padding: const EdgeInsets.all(1.0)),
             Text(
@@ -28,7 +39,6 @@ class CommunityActivePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Text('寒云'),
                 Row(
                   children: <Widget>[
                     Icon(
